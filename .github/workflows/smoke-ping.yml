@@ -1,0 +1,24 @@
+name: Production Smoke Ping
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    name: Check vaultmtg.app
+    runs-on: ubuntu-latest
+    steps:
+    - name: Homepage loads
+      run: |
+        for i in $(seq 1 3); do
+          if curl -fsSL --max-time 10 https://vaultmtg.app/ | grep -qi 'vaultmtg'; then
+            echo "Smoke check passed."
+            exit 0
+          fi
+          echo "Attempt $i/3 failed, retrying..."
+          sleep 5
+        done
+        echo "Smoke check failed after 3 attempts."
+        exit 1
