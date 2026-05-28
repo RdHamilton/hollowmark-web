@@ -9,7 +9,7 @@ const footerLinks = [
   {
     label: "Community",
     items: [
-      { label: "Discord", href: "https://discord.gg/vaultmtg" },
+      { label: "Discord", href: "https://discord.gg/XwVsV892b4" },
       { label: "Reddit", href: "https://reddit.com/r/vaultmtg" },
     ],
   },
