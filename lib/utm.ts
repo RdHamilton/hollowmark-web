@@ -23,9 +23,6 @@ export interface StoredUTMs {
   referrer: string | null;
   landing_url: string;
   captured_at: string; // ISO 8601
-  // PostHog-only fields (not persisted to localStorage or sent to BFF)
-  utm_content?: string | null;
-  utm_term?: string | null;
 }
 
 function isExpired(capturedAt: string): boolean {
@@ -54,8 +51,6 @@ export function captureUTMs(): void {
   const utmSource = params.get("utm_source");
   const utmMedium = params.get("utm_medium");
   const utmCampaign = params.get("utm_campaign");
-  const utmContent = params.get("utm_content");
-  const utmTerm = params.get("utm_term");
 
   // No UTM params and no referrer — nothing to capture.
   if (!utmSource && !utmMedium && !utmCampaign) {
@@ -78,8 +73,6 @@ export function captureUTMs(): void {
     referrer: referrerOrigin,
     landing_url: window.location.origin + window.location.pathname,
     captured_at: new Date().toISOString(),
-    utm_content: utmContent,
-    utm_term: utmTerm,
   };
 
   try {

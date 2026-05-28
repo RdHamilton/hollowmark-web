@@ -32,12 +32,13 @@ export default function AnalyticsProvider() {
       });
 
       const utms = readUTMs();
-      posthog.capture("waitlist_page_view", {
+      const urlParams = new URLSearchParams(window.location.search);
+      posthog.capture("funnel_landing_page_viewed", {
         utm_source: utms?.utm_source ?? null,
         utm_medium: utms?.utm_medium ?? null,
         utm_campaign: utms?.utm_campaign ?? null,
-        utm_content: utms?.utm_content ?? null,
-        utm_term: utms?.utm_term ?? null,
+        utm_content: urlParams.get("utm_content"),
+        utm_term: urlParams.get("utm_term"),
         referrer: utms?.referrer ?? null,
         landing_url: utms?.landing_url ?? null,
       });
