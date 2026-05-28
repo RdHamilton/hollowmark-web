@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import AnalyticsProvider from "./components/AnalyticsProvider";
 import "./globals.css";
 
 const sora = Sora({
@@ -46,6 +47,7 @@ export default function RootLayout({
       className={`${sora.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F1F5F9]">
+        <AnalyticsProvider />
         {children}
         <Script
           id="crisp-widget"
