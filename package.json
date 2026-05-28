@@ -24,7 +24,7 @@
     "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.39.4",
+    "eslint": "^10.4.0",
     "eslint-config-next": "16.2.5",
     "jsdom": "^27.0.1",
     "posthog-js": "^1.376.3",
