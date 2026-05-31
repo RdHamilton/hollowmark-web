@@ -230,6 +230,7 @@ function FlavorBox({ color, text }: { color: string; text: string }) {
           fontSize: 17,
           lineHeight: 1.4,
           color,
+          textWrap: "balance" as unknown as undefined,
         }}
       >
         — {text}
@@ -316,6 +317,7 @@ function ChapterArticle({
             lineHeight: 1.55,
             color: "rgba(241,245,249,0.78)",
             maxWidth: 560,
+            textWrap: "pretty" as unknown as undefined,
           }}
         >
           {body}

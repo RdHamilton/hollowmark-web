@@ -18,7 +18,7 @@ export default function Nav() {
     <header
       className="fixed top-0 left-0 right-0 z-50"
       style={{
-        borderBottom: "1px solid rgba(74,144,217,0.15)",
+        borderBottom: "1px solid var(--color-surface-border-subtle)",
         background: "rgba(10,14,22,0.85)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
@@ -42,7 +42,7 @@ export default function Nav() {
               fontWeight: 600,
               fontSize: 24,
               letterSpacing: "0.01em",
-              color: "#4A90D9",
+              color: "var(--color-vault-sapphire)",
               textShadow: "0 1px 8px rgba(74,144,217,0.25)",
               lineHeight: 1,
             }}
@@ -79,7 +79,7 @@ export default function Nav() {
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.color = "#4A90D9";
+                  el.style.color = "var(--color-vault-sapphire)";
                   el.style.borderBottomColor = "rgba(74,144,217,0.5)";
                 }}
                 onMouseLeave={(e) => {
@@ -94,18 +94,19 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* Desktop CTA — serif italic sapphire button */}
+        {/* Desktop CTA — "Begin" — serif italic sapphire button.
+            nav-cta-focus class carries the :focus-visible ring (WCAG 2.4.7, #345). */}
         <a
           href="#begin"
-          className="hidden md:inline-flex items-center gap-2"
+          className="hidden md:inline-flex items-center gap-2 nav-cta-focus"
           style={{
             padding: "10px 22px",
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontStyle: "italic",
             fontSize: 16,
             fontWeight: 600,
-            color: "#0A0E16",
-            background: "linear-gradient(180deg, #7CB5F0 0%, #4A90D9 100%)",
+            color: "var(--color-surface-sunken)",
+            background: "linear-gradient(180deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%)",
             border: "1px solid rgba(124,181,240,0.5)",
             borderRadius: 4,
             boxShadow:
@@ -115,7 +116,7 @@ export default function Nav() {
             whiteSpace: "nowrap",
           }}
         >
-          Begin the draft
+          Begin
         </a>
 
         {/* Mobile hamburger */}
@@ -144,7 +145,7 @@ export default function Nav() {
       {open && (
         <div
           style={{
-            borderTop: "1px solid rgba(74,144,217,0.15)",
+            borderTop: "1px solid var(--color-surface-border-subtle)",
             background: "rgba(10,14,22,0.95)",
             padding: "16px 24px 20px",
           }}
@@ -177,10 +178,12 @@ export default function Nav() {
                 </a>
               </li>
             ))}
+            {/* Mobile CTA — "Begin" — focus ring restored (#345) */}
             <li className="pt-2">
               <a
                 href="#begin"
                 onClick={() => setOpen(false)}
+                className="nav-cta-focus"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -189,20 +192,29 @@ export default function Nav() {
                   fontStyle: "italic",
                   fontSize: 17,
                   fontWeight: 600,
-                  color: "#0A0E16",
+                  color: "var(--color-surface-sunken)",
                   background:
-                    "linear-gradient(180deg, #7CB5F0 0%, #4A90D9 100%)",
+                    "linear-gradient(180deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%)",
                   border: "1px solid rgba(124,181,240,0.5)",
                   borderRadius: 4,
                   textDecoration: "none",
                 }}
               >
-                Begin the draft
+                Begin
               </a>
             </li>
           </ul>
         </div>
       )}
+
+      {/* Focus-visible ring for CTA anchors — WCAG 2.4.7 compliance (#345).
+          Scoped class avoids the inline-style limitation (no pseudo-selector support). */}
+      <style>{`
+        .nav-cta-focus:focus-visible {
+          outline: 2px solid var(--color-primary-600);
+          outline-offset: 2px;
+        }
+      `}</style>
     </header>
   );
 }
