@@ -1,16 +1,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Primary accent — Vault Amber */
-  --color-primary-400: #F7BA58;
-  --color-primary-500: #F5A623;
-  --color-primary-600: #C8841A;
+  /* Primary accent — Vault Sapphire */
+  --color-primary-400: #7CB5F0;
+  --color-primary-500: #4A90D9;
+  --color-primary-600: #2C6BAA;
+
+  /* Sapphire support */
+  --color-vault-sapphire:      #4A90D9;
+  --color-vault-sapphire-dim:  #163A66;
 
   /* Surfaces */
   --color-surface-base:    #0D1117;
+  --color-surface-sunken:  #0A0E16;
+  --color-surface-footer:  #070A12;
   --color-surface-raised:  #161C26;
   --color-surface-overlay: #1E2636;
   --color-surface-border:  #2A3347;
+  --color-surface-border-subtle: #1F2A3C;
 
   /* Text */
   --color-text-primary:   #F1F5F9;
@@ -24,7 +31,7 @@
   --color-info:    #38BDF8;
 
   /* Typography */
-  --font-display: 'Sora', sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body:    'Inter', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
 
@@ -36,14 +43,18 @@
 }
 
 :root {
-  --color-primary:       #F5A623;
-  --color-primary-light: #F7BA58;
-  --color-primary-dark:  #C8841A;
+  --color-primary:       #4A90D9;
+  --color-primary-light: #7CB5F0;
+  --color-primary-dark:  #2C6BAA;
+  --color-primary-dim:   #163A66;
 
-  --surface-base:    #0D1117;
-  --surface-raised:  #161C26;
-  --surface-overlay: #1E2636;
-  --surface-border:  #2A3347;
+  --surface-base:          #0D1117;
+  --surface-sunken:        #0A0E16;
+  --surface-footer:        #070A12;
+  --surface-raised:        #161C26;
+  --surface-overlay:       #1E2636;
+  --surface-border:        #2A3347;
+  --surface-border-subtle: #1F2A3C;
 
   --text-primary:   #F1F5F9;
   --text-secondary: #94A3B8;

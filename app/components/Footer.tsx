@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const footerLinks = [
   {
     label: "Legal",
@@ -30,12 +32,13 @@ export default function Footer() {
         <div className="flex flex-col gap-12 md:flex-row md:justify-between">
           {/* Brand */}
           <div className="max-w-xs">
-            <span
-              className="text-xl font-bold text-[#F5A623]"
-              style={{ fontFamily: "var(--font-sora, Sora, sans-serif)" }}
-            >
-              VaultMTG
-            </span>
+            <Image
+              src="/logo-vaultmtg-wordmark-light-paths.svg"
+              alt="VaultMTG"
+              width={150}
+              height={40}
+              className="h-8 w-auto"
+            />
             <p className="mt-3 text-sm text-[#94A3B8] leading-relaxed">
               Your edge. Every draft. Every match. The MTG Arena companion for
               serious players.
@@ -58,7 +61,7 @@ export default function Footer() {
                     <li key={item.label}>
                       <a
                         href={item.href}
-                        className="text-sm text-[#94A3B8] transition-colors hover:text-[#F5A623]"
+                        className="text-sm text-[#94A3B8] transition-colors hover:text-[#4A90D9]"
                         target={
                           item.href.startsWith("http") ? "_blank" : undefined
                         }
