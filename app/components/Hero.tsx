@@ -12,7 +12,7 @@ const MANA_PIPS = [
 export default function Hero() {
   return (
     <section
-      id="compendium"
+      id="hero"
       style={{
         position: "relative",
         minHeight: "calc(100vh - 84px)",
