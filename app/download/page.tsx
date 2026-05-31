@@ -2,11 +2,34 @@ import type { Metadata } from "next";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import {
+  ogImage,
+  SITE_BASE,
+  TWITTER_CARD,
+  OG_IMAGE_URL,
+} from "@/lib/og-metadata";
+
+const DOWNLOAD_TITLE = "Download VaultMTG — Your edge. Every draft. Every match.";
+const DOWNLOAD_DESCRIPTION =
+  "Download the VaultMTG companion app for MTG Arena. Get real-time draft ratings, intelligent deck analysis, and full match history — available for Mac and Windows.";
 
 export const metadata: Metadata = {
-  title: "Download VaultMTG — Your edge. Every draft. Every match.",
-  description:
-    "Download the VaultMTG companion app for MTG Arena. Get real-time draft ratings, intelligent deck analysis, and full match history — available for Mac and Windows.",
+  title: DOWNLOAD_TITLE,
+  description: DOWNLOAD_DESCRIPTION,
+  openGraph: {
+    title: DOWNLOAD_TITLE,
+    description: DOWNLOAD_DESCRIPTION,
+    url: `${SITE_BASE.url}/download`,
+    siteName: SITE_BASE.siteName,
+    type: "website",
+    images: [ogImage],
+  },
+  twitter: {
+    card: TWITTER_CARD,
+    title: DOWNLOAD_TITLE,
+    description: DOWNLOAD_DESCRIPTION,
+    images: [OG_IMAGE_URL],
+  },
 };
 
 export default function DownloadPage() {
