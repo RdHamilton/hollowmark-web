@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navLinks = [
@@ -13,16 +14,18 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[#2A3347] bg-[#0D1117]/90 backdrop-blur-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[#1F2A3C] bg-[#0D1117]/90 backdrop-blur-sm">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
-          <span
-            className="text-xl font-bold text-[#F5A623] tracking-tight"
-            style={{ fontFamily: "var(--font-sora, Sora, sans-serif)" }}
-          >
-            VaultMTG
-          </span>
+        <a href="#" className="flex items-center gap-2 group" aria-label="VaultMTG home">
+          <Image
+            src="/logo-vaultmtg-wordmark-light-paths.svg"
+            alt="VaultMTG"
+            width={150}
+            height={40}
+            priority
+            className="h-8 w-auto"
+          />
         </a>
 
         {/* Desktop nav */}
@@ -31,7 +34,7 @@ export default function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-medium text-[#94A3B8] transition-colors hover:text-[#F5A623]"
+                className="text-sm font-medium text-[#94A3B8] transition-colors hover:text-[#4A90D9]"
               >
                 {link.label}
               </a>
@@ -42,7 +45,7 @@ export default function Nav() {
         {/* CTA */}
         <a
           href="#cta"
-          className="hidden md:inline-flex items-center rounded-lg bg-[#F5A623] px-4 py-2 text-sm font-semibold text-[#0D1117] transition-colors hover:bg-[#F7BA58] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8841A]"
+          className="hidden md:inline-flex items-center rounded-lg bg-[#4A90D9] px-4 py-2 text-sm font-semibold text-[#0D1117] transition-colors hover:bg-[#7CB5F0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2C6BAA]"
         >
           Get Early Access
         </a>
@@ -70,7 +73,7 @@ export default function Nav() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="block text-sm font-medium text-[#94A3B8] transition-colors hover:text-[#F5A623]"
+                  className="block text-sm font-medium text-[#94A3B8] transition-colors hover:text-[#4A90D9]"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -80,7 +83,7 @@ export default function Nav() {
             <li>
               <a
                 href="#cta"
-                className="inline-flex items-center rounded-lg bg-[#F5A623] px-4 py-2 text-sm font-semibold text-[#0D1117] hover:bg-[#F7BA58]"
+                className="inline-flex items-center rounded-lg bg-[#4A90D9] px-4 py-2 text-sm font-semibold text-[#0D1117] hover:bg-[#7CB5F0]"
                 onClick={() => setOpen(false)}
               >
                 Get Early Access
