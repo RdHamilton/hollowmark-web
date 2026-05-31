@@ -192,4 +192,31 @@ describe("Features — Compendium chapters (#315 PR3)", () => {
     // 5 orb SVGs, one per chapter
     expect(svgs.length).toBe(5);
   });
+
+  // ── textWrap (#347) ────────────────────────────────────────────────────────
+
+  it("applies textWrap:pretty to ChapterArticle body paragraphs", () => {
+    const { container } = render(<Features />);
+    // All chapter body <p> elements (not blockquote/flavor, not stat labels)
+    // sit inside article > div and carry "pretty"
+    const articles = container.querySelectorAll("article");
+    articles.forEach((article) => {
+      // The body copy paragraph is the one with the longest text and "pretty"
+      const bodyPs = Array.from(article.querySelectorAll("p")).filter(
+        (p) => (p.getAttribute("style") ?? "").includes("pretty"),
+      );
+      expect(bodyPs.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  it("applies textWrap:balance to FlavorBox paragraphs", () => {
+    const { container } = render(<Features />);
+    // Each blockquote contains a <p> with textWrap:balance
+    const blockquotes = container.querySelectorAll("blockquote");
+    expect(blockquotes.length).toBe(5);
+    blockquotes.forEach((bq) => {
+      const p = bq.querySelector("p");
+      expect(p?.getAttribute("style")).toContain("balance");
+    });
+  });
 });

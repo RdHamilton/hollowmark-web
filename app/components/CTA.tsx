@@ -1,7 +1,12 @@
+// CTA → "Begin" — § 05
+// Atmospheric serif-italic call-to-action. Single email input + submit
+// button with stub validation, success state, and platform pills.
+// Design: Cormorant Garamond display, JetBrains Mono eyebrow, sapphire palette.
+// Follows ui_kits/vaultmtg-web/CTA.jsx — Compendium editorial aesthetic.
+
 "use client";
 
 import { useState } from "react";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 export default function CTA() {
   const [email, setEmail] = useState("");
@@ -10,64 +15,161 @@ export default function CTA() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!ok) {
       setError("Please enter a valid email address.");
       return;
     }
     // Static export — no server action available. In production this would
-    // POST to an API endpoint. For now we show the success state.
+    // POST to an API endpoint.
     setSubmitted(true);
     setError("");
   }
 
   return (
     <section
-      id="cta"
-      className="relative overflow-hidden py-32 px-6"
+      id="begin"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "144px 24px",
+        background: "linear-gradient(180deg, var(--color-surface-sunken) 0%, #050810 100%)",
+        borderTop: "1px solid var(--color-surface-border-subtle)",
+      }}
     >
-      {/* Ambient glow */}
+      {/* Ambient sapphire glow centered */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
         aria-hidden="true"
-      >
-        <div className="absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#F5A623]/8 blur-3xl" />
-      </div>
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 800,
+          height: 600,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(74,144,217,0.12) 0%, rgba(74,144,217,0) 70%)",
+          filter: "blur(80px)",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Dust noise */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.7  0 0 0 0 0.95  0 0 0 0.05 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
+          mixBlendMode: "screen",
+          opacity: 0.3,
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="mx-auto max-w-2xl text-center">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#F5A623]">
-          Early Access
-        </p>
-        <h2
-          className="mb-6 text-4xl font-bold text-[#F1F5F9] sm:text-5xl"
-          style={{ fontFamily: "var(--font-sora, Sora, sans-serif)" }}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          margin: "0 auto",
+          maxWidth: 720,
+          textAlign: "center",
+        }}
+      >
+        {/* § eyebrow — JetBrains Mono */}
+        <div
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 11,
+            letterSpacing: "0.32em",
+            textTransform: "uppercase" as const,
+            color: "rgba(74,144,217,0.7)",
+            marginBottom: 14,
+          }}
         >
-          Ready to draft smarter?
+          § 05 · Begin
+        </div>
+
+        {/* Display heading — Cormorant Garamond italic */}
+        <h2
+          style={{
+            margin: "0 0 28px",
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontStyle: "italic",
+            fontWeight: 500,
+            fontSize: "clamp(40px, 5vw, 64px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            color: "var(--color-text-primary)",
+            textShadow: "0 2px 12px rgba(0,0,0,0.6)",
+            textWrap: "balance" as unknown as undefined,
+          }}
+        >
+          Ready to draft{" "}
+          <span
+            style={{
+              color: "var(--color-vault-sapphire)",
+              textShadow: "0 0 24px rgba(74,144,217,0.4)",
+            }}
+          >
+            smarter?
+          </span>
         </h2>
-        <p className="mb-10 text-lg text-[#94A3B8]">
-          Join the waitlist and get early access when VaultMTG launches. Free
-          during beta — no credit card required.
+
+        {/* Deck copy — Cormorant Garamond italic */}
+        <p
+          style={{
+            margin: "0 0 48px",
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontStyle: "italic",
+            fontSize: 20,
+            lineHeight: 1.5,
+            color: "rgba(241,245,249,0.75)",
+            textWrap: "pretty" as unknown as undefined,
+          }}
+        >
+          Join the waitlist and receive early access when VaultMTG launches.
+          Free during beta — no credit card, no obligation.
         </p>
 
         {submitted ? (
-          <div className="flex items-center justify-center gap-3 rounded-xl border border-[#22C55E]/30 bg-[#22C55E]/10 px-6 py-4 text-[#22C55E]">
-            <CheckCircleIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
-            <span className="font-medium">
-              You&rsquo;re on the list. We&rsquo;ll be in touch soon.
-            </span>
+          <div
+            role="status"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 14,
+              padding: "18px 28px",
+              borderRadius: 4,
+              border: "1px solid rgba(74,144,217,0.4)",
+              background: "rgba(74,144,217,0.10)",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              fontSize: 18,
+              color: "var(--color-primary-400)",
+              boxShadow:
+                "0 0 0 1px rgba(74,144,217,0.2), 0 8px 32px rgba(74,144,217,0.15)",
+            }}
+          >
+            ✓&nbsp;&nbsp;You&rsquo;re on the list. We&rsquo;ll be in touch when the doors open.
           </div>
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-            aria-label="Early access waitlist signup"
             noValidate
+            aria-label="Begin the draft waitlist signup"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 12,
+              justifyContent: "center",
+            }}
           >
-            <label htmlFor="email-cta" className="sr-only">
+            <label htmlFor="email-begin" style={{ position: "absolute", left: -9999 }}>
               Email address
             </label>
             <input
-              id="email-cta"
+              id="email-begin"
               type="email"
               autoComplete="email"
               placeholder="your@email.com"
@@ -77,38 +179,113 @@ export default function CTA() {
                 setError("");
               }}
               required
-              aria-describedby={error ? "email-error" : undefined}
-              className="w-full max-w-xs rounded-lg border border-[#2A3347] bg-[#161C26] px-4 py-3 text-[#F1F5F9] placeholder-[#4E6080] outline-none transition-colors focus:border-[#F5A623] focus:ring-1 focus:ring-[#F5A623] sm:max-w-sm"
+              aria-describedby={error ? "begin-email-error" : undefined}
+              style={{
+                width: 280,
+                height: 56,
+                padding: "0 20px",
+                borderRadius: 4,
+                border: `1px solid ${error ? "var(--color-danger)" : "rgba(241,245,249,0.2)"}`,
+                background: "rgba(13,17,23,0.6)",
+                backdropFilter: "blur(4px)",
+                color: "var(--color-text-primary)",
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontStyle: "italic",
+                fontSize: 18,
+                outline: "none",
+              }}
+              onFocus={(e) => {
+                if (!error) {
+                  e.target.style.borderColor = "var(--color-primary-500)";
+                  e.target.style.boxShadow = "0 0 0 2px rgba(74,144,217,0.20)";
+                }
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = error
+                  ? "var(--color-danger)"
+                  : "rgba(241,245,249,0.2)";
+                e.target.style.boxShadow = "none";
+              }}
             />
             <button
               type="submit"
-              className="w-full rounded-lg bg-[#F5A623] px-6 py-3 font-semibold text-[#0D1117] transition-colors hover:bg-[#F7BA58] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8841A] sm:w-auto"
+              style={{
+                height: 56,
+                padding: "0 32px",
+                borderRadius: 4,
+                border: 0,
+                background: "linear-gradient(180deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%)",
+                color: "var(--color-surface-sunken)",
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontStyle: "italic",
+                fontSize: 18,
+                fontWeight: 600,
+                cursor: "pointer",
+                boxShadow:
+                  "0 0 0 1px rgba(74,144,217,0.4), 0 8px 24px rgba(74,144,217,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
+                whiteSpace: "nowrap",
+              }}
             >
-              Get Early Access
+              Begin the draft →
             </button>
           </form>
         )}
 
         {error && (
-          <p id="email-error" role="alert" className="mt-3 text-sm text-[#EF4444]">
+          <p
+            id="begin-email-error"
+            role="alert"
+            style={{
+              marginTop: 16,
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              color: "var(--color-danger)",
+            }}
+          >
             {error}
           </p>
         )}
 
         {!submitted && (
-          <p className="mt-4 text-sm text-[#4E6080]">
-            No spam. Unsubscribe any time.
+          <p
+            style={{
+              marginTop: 20,
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              fontSize: 14,
+              color: "rgba(241,245,249,0.4)",
+            }}
+          >
+            No spam. Unsubscribe at any time.
           </p>
         )}
 
         {/* Platform pills */}
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          {["macOS", "Windows"].map((platform) => (
+        <div
+          style={{
+            marginTop: 56,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 12,
+            justifyContent: "center",
+          }}
+        >
+          {["macOS", "Windows"].map((p) => (
             <span
-              key={platform}
-              className="rounded-full border border-[#2A3347] bg-[#161C26] px-4 py-1.5 text-xs font-medium text-[#94A3B8]"
+              key={p}
+              style={{
+                padding: "8px 18px",
+                borderRadius: 9999,
+                border: "1px solid rgba(241,245,249,0.15)",
+                background: "rgba(255,255,255,0.02)",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 11,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase" as const,
+                color: "rgba(241,245,249,0.55)",
+              }}
             >
-              {platform}
+              {p}
             </span>
           ))}
         </div>
