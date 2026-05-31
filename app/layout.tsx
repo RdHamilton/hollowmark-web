@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import AnalyticsProvider from "./components/AnalyticsProvider";
+import {
+  ogImage,
+  SITE_BASE,
+  TWITTER_CARD,
+  OG_IMAGE_URL,
+} from "@/lib/og-metadata";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -24,16 +30,21 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VaultMTG — Your edge. Every draft. Every match.",
-  description:
-    "VaultMTG is the MTG Arena companion app for serious players. Real-time draft ratings, deck analysis, collection sync, and match history — all in one place.",
+  title: SITE_BASE.title,
+  description: SITE_BASE.description,
   openGraph: {
-    title: "VaultMTG — Your edge. Every draft. Every match.",
-    description:
-      "Real-time draft ratings, deck analysis, collection sync, and match history for MTG Arena.",
-    url: "https://vaultmtg.app",
-    siteName: "VaultMTG",
+    title: SITE_BASE.title,
+    description: SITE_BASE.ogDescription,
+    url: SITE_BASE.url,
+    siteName: SITE_BASE.siteName,
     type: "website",
+    images: [ogImage],
+  },
+  twitter: {
+    card: TWITTER_CARD,
+    title: SITE_BASE.title,
+    description: SITE_BASE.ogDescription,
+    images: [OG_IMAGE_URL],
   },
   manifest: "/site.webmanifest",
   themeColor: "#0D1117",
