@@ -34,6 +34,8 @@ export const metadata: Metadata = {
     siteName: "VaultMTG",
     type: "website",
   },
+  manifest: "/site.webmanifest",
+  themeColor: "#0D1117",
 };
 
 export default function RootLayout({
