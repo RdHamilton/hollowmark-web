@@ -11,9 +11,11 @@ import Hero from "../Hero";
 afterEach(cleanup);
 
 describe("Hero — Compendium editorial rewrite (PR2)", () => {
-  it("renders the section with id='compendium'", () => {
+  it("renders the section with id='hero'", () => {
     const { container } = render(<Hero />);
-    const section = container.querySelector("section#compendium");
+    // PR3 corrects the Hero id from 'compendium' to 'hero' so that
+    // the nav #compendium anchor links to the Features section (§ 02).
+    const section = container.querySelector("section#hero");
     expect(section).toBeTruthy();
   });
 
