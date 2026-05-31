@@ -1,3 +1,5 @@
+"use client";
+
 // Footer → Colophon
 // Editorial print-shop style — masthead-like brand block, link columns set
 // as classified-ad lists, colophon attribution at the bottom. No SaaS chrome.
