@@ -11,7 +11,7 @@ import {
 
 const DOWNLOAD_TITLE = "Download VaultMTG — Your edge. Every draft. Every match.";
 const DOWNLOAD_DESCRIPTION =
-  "Download the VaultMTG companion app for MTG Arena. Get real-time draft ratings, intelligent deck analysis, and full match history — available for Mac and Windows.";
+  "Download the VaultMTG companion app for MTG Arena. Get real-time draft ratings, deck analysis, and full match history — available for Mac and Windows.";
 
 export const metadata: Metadata = {
   title: DOWNLOAD_TITLE,
@@ -42,7 +42,7 @@ export default function DownloadPage() {
           className="pointer-events-none fixed inset-0 -z-10"
           aria-hidden="true"
         >
-          <div className="absolute left-1/2 top-1/3 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#F5A623]/5 blur-3xl" />
+          <div className="absolute left-1/2 top-1/3 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A90D9]/5 blur-3xl" />
         </div>
 
         {/* Hero section */}
@@ -58,17 +58,17 @@ export default function DownloadPage() {
           {/* App name */}
           <h1
             className="mb-4 text-4xl font-extrabold leading-tight tracking-tight text-[#F1F5F9] sm:text-5xl lg:text-6xl"
-            style={{ fontFamily: "var(--font-sora, Sora, sans-serif)" }}
+            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic" }}
           >
             Download{" "}
-            <span className="text-[#F5A623]">VaultMTG</span>
+            <span className="text-[#4A90D9]">VaultMTG</span>
           </h1>
 
           {/* Value prop */}
           <p className="mb-12 text-lg leading-relaxed text-[#94A3B8]">
             The MTG Arena companion built for serious players. Install the daemon
-            to unlock real-time draft ratings, intelligent deck analysis,
-            collection sync, and full match history — all running seamlessly in
+            to unlock real-time draft ratings, deck analysis,
+            collection sync, and full match history — all running quietly in
             the background while you play.
           </p>
 
@@ -79,7 +79,7 @@ export default function DownloadPage() {
             <a
               href="#"
               aria-label="Download VaultMTG for Mac"
-              className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-[#F5A623] px-8 py-4 text-base font-semibold text-[#0D1117] shadow-lg transition-colors hover:bg-[#F7BA58] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8841A] sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-[#4A90D9] px-8 py-4 text-base font-semibold text-[#0D1117] shadow-lg transition-colors hover:bg-[#7CB5F0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2C6BAA] sm:w-auto"
             >
               <ArrowDownTrayIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
               <span className="flex flex-col text-left leading-tight">
@@ -93,7 +93,7 @@ export default function DownloadPage() {
             <a
               href="#"
               aria-label="Download VaultMTG for Windows"
-              className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-[#2A3347] bg-[#161C26] px-8 py-4 text-base font-medium text-[#F1F5F9] transition-colors hover:border-[#F5A623]/50 hover:text-[#F5A623] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8841A] sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-[#2A3347] bg-[#161C26] px-8 py-4 text-base font-medium text-[#F1F5F9] transition-colors hover:border-[#4A90D9]/50 hover:text-[#4A90D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2C6BAA] sm:w-auto"
             >
               <ArrowDownTrayIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
               <span className="flex flex-col text-left leading-tight">
@@ -165,7 +165,7 @@ const FEATURES = [
     icon: "🔍",
     title: "Deck analysis",
     description:
-      "Intelligent insights on curve, archetype fit, and format-specific strengths.",
+      "Curve, archetype fit, and format-specific strengths — at a glance.",
   },
   {
     icon: "🏆",
@@ -175,7 +175,7 @@ const FEATURES = [
   },
   {
     icon: "🖥️",
-    title: "Seamless background daemon",
+    title: "Background daemon",
     description:
       "Runs quietly alongside MTG Arena — no overlay clutter, no performance hit.",
   },

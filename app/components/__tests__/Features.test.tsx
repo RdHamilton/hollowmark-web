@@ -96,7 +96,7 @@ describe("Features — Compendium chapters (#315 PR3)", () => {
     ).toBeTruthy();
   });
 
-  // ── Per-chapter stat values ────────────────────────────────────────────────
+  // ── Per-chapter stat values — honest pre-launch figures ──────────────────────
 
   it("renders the 30,000+ cards-rated stat for Chapter I", () => {
     render(<Features />);
@@ -104,28 +104,48 @@ describe("Features — Compendium chapters (#315 PR3)", () => {
     expect(screen.getByText("cards rated")).toBeTruthy();
   });
 
-  it("renders the +8% win-rate lift stat for Chapter II", () => {
+  it("renders the A–F ratings-per-card stat for Chapter II (no inflated win-rate)", () => {
     render(<Features />);
-    expect(screen.getByText("+8%")).toBeTruthy();
-    expect(screen.getByText("win-rate lift")).toBeTruthy();
+    expect(screen.getByText("A–F")).toBeTruthy();
+    expect(screen.getByText("ratings per card")).toBeTruthy();
   });
 
-  it("renders the 500K+ drafts tracked stat for Chapter III", () => {
+  it("renders the All matches-logged stat for Chapter III (no inflated draft count)", () => {
     render(<Features />);
-    expect(screen.getByText("500K+")).toBeTruthy();
-    expect(screen.getByText("drafts tracked")).toBeTruthy();
+    expect(screen.getByText("All")).toBeTruthy();
+    expect(screen.getByText("matches logged")).toBeTruthy();
   });
 
-  it("renders the 2.4s saved-per-pick stat for Chapter IV", () => {
+  it("renders the Live pick-data stat for Chapter IV (no inflated pick-time claim)", () => {
     render(<Features />);
-    expect(screen.getByText("2.4s")).toBeTruthy();
-    expect(screen.getByText("saved per pick")).toBeTruthy();
+    expect(screen.getByText("Live")).toBeTruthy();
+    expect(screen.getByText("pick data")).toBeTruthy();
   });
 
-  it("renders the 847 active players stat for Chapter V", () => {
+  it("renders the Beta / August 2026 stat for Chapter V (honest launch framing)", () => {
     render(<Features />);
-    expect(screen.getByText("847")).toBeTruthy();
-    expect(screen.getByText("active players")).toBeTruthy();
+    expect(screen.getByText("Beta")).toBeTruthy();
+    expect(screen.getByText("August 2026")).toBeTruthy();
+  });
+
+  it("does not render the inflated +8% win-rate lift claim", () => {
+    const { container } = render(<Features />);
+    expect(container.innerHTML).not.toContain("+8%");
+  });
+
+  it("does not render the inflated 500K+ drafts tracked claim", () => {
+    const { container } = render(<Features />);
+    expect(container.innerHTML).not.toContain("500K+");
+  });
+
+  it("does not render the inflated 2.4s pick-time claim", () => {
+    const { container } = render(<Features />);
+    expect(container.innerHTML).not.toContain("2.4s");
+  });
+
+  it("does not render the fabricated 847 active players figure", () => {
+    const { container } = render(<Features />);
+    expect(container.innerHTML).not.toContain("847");
   });
 
   // ── Flavor-text blockquotes ────────────────────────────────────────────────
