@@ -1,5 +1,9 @@
 /**
- * Component tests for Stats — editorial ledger + Voices testimonials (#315 PR4).
+ * Component tests for Stats — editorial ledger + pre-launch framing.
+ *
+ * Testimonials (Voices § 04) are suppressed pre-launch; no fabricated quotes
+ * are shown. Honest stat entries replace inflated pre-launch figures.
+ * Restore Voices with real player quotes post-beta (vault-mtg-tickets#115).
  *
  * Running: npm run test
  */
@@ -10,7 +14,7 @@ import Stats from "../Stats";
 
 afterEach(cleanup);
 
-describe("Stats — editorial ledger + Voices (#315 PR4)", () => {
+describe("Stats — editorial ledger + pre-launch framing", () => {
 
   // ── Section structure ────────────────────────────────────────────────────────
 
@@ -25,133 +29,106 @@ describe("Stats — editorial ledger + Voices (#315 PR4)", () => {
     expect(screen.getByText(/§ 03 · Statistics/i)).toBeTruthy();
   });
 
-  it("renders the § 04 · Voices eyebrow marker", () => {
-    render(<Stats />);
-    expect(screen.getByText(/§ 04 · Voices from the community/i)).toBeTruthy();
-  });
+  // ── One h2 heading (Voices suppressed pre-launch) ────────────────────────────
 
-  // ── Two h2 headings ──────────────────────────────────────────────────────────
-
-  it("renders both section display headings as h2 elements", () => {
+  it("renders exactly one section display heading (Voices suppressed pre-launch)", () => {
     render(<Stats />);
     const headings = screen.getAllByRole("heading", { level: 2 });
-    expect(headings.length).toBe(2);
+    expect(headings.length).toBe(1);
   });
 
-  it("renders 'The ledger, kept honest.' as the Statistics heading", () => {
+  it("renders 'Built before launch. Honest about it.' as the Statistics heading", () => {
     render(<Stats />);
-    const heading = screen.getByRole("heading", { name: /the ledger, kept honest/i });
+    const heading = screen.getByRole("heading", { name: /built before launch\. honest about it\./i });
     expect(heading).toBeTruthy();
     expect(heading.tagName.toLowerCase()).toBe("h2");
   });
 
-  it("renders 'Players who already have the edge.' as the Voices heading", () => {
-    render(<Stats />);
-    const heading = screen.getByRole("heading", { name: /players who already have the edge/i });
-    expect(heading).toBeTruthy();
-    expect(heading.tagName.toLowerCase()).toBe("h2");
-  });
-
-  // ── Section headings use Cormorant Garamond italic ───────────────────────────
+  // ── Section heading uses Cormorant Garamond italic ───────────────────────────
 
   it("renders the Statistics h2 in Cormorant Garamond italic", () => {
     render(<Stats />);
-    const heading = screen.getByRole("heading", { name: /the ledger, kept honest/i });
+    const heading = screen.getByRole("heading", { name: /built before launch\. honest about it\./i });
     expect(heading.getAttribute("style")).toContain("Cormorant Garamond");
     expect(heading.getAttribute("style")).toContain("italic");
   });
 
-  it("renders the Voices h2 in Cormorant Garamond italic", () => {
-    render(<Stats />);
-    const heading = screen.getByRole("heading", { name: /players who already have the edge/i });
-    expect(heading.getAttribute("style")).toContain("Cormorant Garamond");
-    expect(heading.getAttribute("style")).toContain("italic");
-  });
-
-  // ── Number ledger — four stat entries ────────────────────────────────────────
+  // ── Number ledger — four honest pre-launch entries ───────────────────────────
 
   it("renders four numeric stat values", () => {
     render(<Stats />);
     expect(screen.getByText("30,000+")).toBeTruthy();
-    expect(screen.getByText("500K+")).toBeTruthy();
-    expect(screen.getByText("2.4s")).toBeTruthy();
-    expect(screen.getByText("+8%")).toBeTruthy();
+    expect(screen.getByText("Aug 2026")).toBeTruthy();
+    expect(screen.getByText("Free")).toBeTruthy();
+    expect(screen.getByText("2")).toBeTruthy();
   });
 
-  it("renders four stat labels in Cormorant Garamond italic", () => {
+  it("renders four stat labels", () => {
     render(<Stats />);
     expect(screen.getByText("cards rated")).toBeTruthy();
-    expect(screen.getByText("drafts tracked")).toBeTruthy();
-    expect(screen.getByText("average pick saved")).toBeTruthy();
-    expect(screen.getByText("win-rate lift")).toBeTruthy();
+    expect(screen.getByText("beta launch")).toBeTruthy();
+    expect(screen.getByText("during beta")).toBeTruthy();
+    expect(screen.getByText("platforms")).toBeTruthy();
   });
 
   it("renders four stat notes (editorial marginalia)", () => {
     render(<Stats />);
     expect(screen.getByText("across all current and recent sets")).toBeTruthy();
-    expect(screen.getByText("and growing every week")).toBeTruthy();
-    expect(screen.getByText("per draft decision")).toBeTruthy();
-    expect(screen.getByText("reported after thirty drafts")).toBeTruthy();
+    expect(screen.getByText("be among the first in")).toBeTruthy();
+    expect(screen.getByText("no credit card required")).toBeTruthy();
+    expect(screen.getByText("macOS and Windows")).toBeTruthy();
   });
 
   it("renders stat values with JetBrains Mono font", () => {
     const { container } = render(<Stats />);
-    // The stats-ledger div holds items whose value divs use JetBrains Mono
     const monoEls = Array.from(container.querySelectorAll("[style*='JetBrains Mono']"));
     expect(monoEls.length).toBeGreaterThan(0);
   });
 
-  // ── Voices — three testimonial blockquotes ───────────────────────────────────
+  // ── Voices — suppressed pre-launch; no fabricated testimonials ───────────────
 
-  it("renders exactly three VoiceCard blockquotes", () => {
+  it("does not render any testimonial blockquotes pre-launch", () => {
     const { container } = render(<Stats />);
     const blockquotes = container.querySelectorAll("blockquote");
-    expect(blockquotes.length).toBe(3);
+    expect(blockquotes.length).toBe(0);
   });
 
-  it("renders the Sable_Raven testimonial", () => {
-    render(<Stats />);
-    expect(screen.getByText("Sable_Raven")).toBeTruthy();
-    expect(screen.getByText(/Mythic rank · limited specialist/i)).toBeTruthy();
-    expect(screen.getByText(/55% to consistently 65%\+/)).toBeTruthy();
+  it("does not render the fabricated Sable_Raven username", () => {
+    const { container } = render(<Stats />);
+    expect(container.innerHTML).not.toContain("Sable_Raven");
   });
 
-  it("renders the DraftKingMTG testimonial", () => {
-    render(<Stats />);
-    expect(screen.getByText("DraftKingMTG")).toBeTruthy();
-    expect(screen.getByText(/Top 100 limited player/i)).toBeTruthy();
-    expect(screen.getByText(/doesn't feel like homework/)).toBeTruthy();
+  it("does not render the fabricated DraftKingMTG username", () => {
+    const { container } = render(<Stats />);
+    expect(container.innerHTML).not.toContain("DraftKingMTG");
   });
 
-  it("renders the Aetherborn_7 testimonial", () => {
-    render(<Stats />);
-    expect(screen.getByText("Aetherborn_7")).toBeTruthy();
-    expect(screen.getByText(/Set collector · competitive drafter/i)).toBeTruthy();
-    expect(screen.getByText(/killer feature/)).toBeTruthy();
+  it("does not render the fabricated Aetherborn_7 username", () => {
+    const { container } = render(<Stats />);
+    expect(container.innerHTML).not.toContain("Aetherborn_7");
+  });
+
+  it("does not render the inflated 500K+ drafts tracked claim", () => {
+    const { container } = render(<Stats />);
+    expect(container.innerHTML).not.toContain("500K+");
+  });
+
+  it("does not render the inflated +8% win-rate lift claim", () => {
+    const { container } = render(<Stats />);
+    expect(container.innerHTML).not.toContain("+8%");
+  });
+
+  it("does not render the inflated 2.4s pick-time claim", () => {
+    const { container } = render(<Stats />);
+    expect(container.innerHTML).not.toContain("2.4s");
   });
 
   // ── Three-flower ornamental break ────────────────────────────────────────────
 
   it("renders the ornamental three-flower break (aria-hidden)", () => {
     const { container } = render(<Stats />);
-    // The ❦ ❦ ❦ span is wrapped in an aria-hidden div
     const ornament = container.querySelector("[aria-hidden='true']");
     expect(ornament).toBeTruthy();
-  });
-
-  // ── VoiceCard blockquote internal structure ───────────────────────────────────
-
-  it("renders a footer within each VoiceCard blockquote", () => {
-    const { container } = render(<Stats />);
-    const footers = container.querySelectorAll("blockquote footer");
-    expect(footers.length).toBe(3);
-  });
-
-  it("renders attribution role labels in JetBrains Mono uppercase", () => {
-    const { container } = render(<Stats />);
-    // Role text spans inside footers carry JetBrains Mono + uppercase
-    const monoRoles = Array.from(container.querySelectorAll("blockquote footer [style*='JetBrains Mono']"));
-    expect(monoRoles.length).toBe(3);
   });
 
   // ── Brand hygiene ────────────────────────────────────────────────────────────
@@ -168,14 +145,7 @@ describe("Stats — editorial ledger + Voices (#315 PR4)", () => {
 
   it("does not retain the legacy rounded-xl testimonial class", () => {
     const { container } = render(<Stats />);
-    // Old component used Tailwind rounded-xl on blockquotes
     expect(container.innerHTML).not.toContain("rounded-xl");
-  });
-
-  it("does not retain the old bg-[#0D1117] inline color on blockquotes", () => {
-    const { container } = render(<Stats />);
-    // Old component had bg-[#0D1117] on blockquote — now uses token-aliased bg
-    expect(container.innerHTML).not.toContain("0D1117");
   });
 
   // ── Token aliases — CSS vars present, not raw hex overrides ──────────────────
@@ -188,14 +158,13 @@ describe("Stats — editorial ledger + Voices (#315 PR4)", () => {
 
   it("uses the --color-vault-sapphire token for the stat values", () => {
     const { container } = render(<Stats />);
-    // At least one element carries the sapphire token
     const sapphireEls = Array.from(container.querySelectorAll("[style*='--color-vault-sapphire']"));
     expect(sapphireEls.length).toBeGreaterThan(0);
   });
 
-  it("uses the --color-text-primary token for the section headings", () => {
+  it("uses the --color-text-primary token for the section heading", () => {
     const { container } = render(<Stats />);
     const headings = container.querySelectorAll("h2[style*='--color-text-primary']");
-    expect(headings.length).toBe(2);
+    expect(headings.length).toBe(1);
   });
 });

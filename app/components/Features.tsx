@@ -44,7 +44,7 @@ const CHAPTERS: Chapter[] = [
     body: "Live tier ratings, win-rate data, and synergy scores for every card in your pack — the moment it appears. The pick you would have made in twenty seconds becomes the pick you make in two.",
     flavor:
       "The draft is decided before the timer starts. Be the one who decided.",
-    stat: { value: "+8%", label: "win-rate lift" },
+    stat: { value: "A–F", label: "ratings per card" },
   },
   {
     num: "III",
@@ -54,7 +54,7 @@ const CHAPTERS: Chapter[] = [
     title: "The cost of every choice",
     body: "Every match logged, every loss accounted for. Opponent archetype, your deck's mana curve, the turn the game turned. Patterns surface that you would never see across a single session — only across hundreds.",
     flavor: "A ledger is a kind of weapon, in the right hands.",
-    stat: { value: "500K+", label: "drafts tracked" },
+    stat: { value: "All", label: "matches logged" },
   },
   {
     num: "IV",
@@ -64,7 +64,7 @@ const CHAPTERS: Chapter[] = [
     title: "Decisions in seconds",
     body: "When the pack appears and the timer drops, the data is already there — sorted by rating, color-coded by your current pairs, with the recommended pick highlighted. No tab-switching, no second-guessing.",
     flavor: "Hesitation is its own decision. So is speed.",
-    stat: { value: "2.4s", label: "saved per pick" },
+    stat: { value: "Live", label: "pick data" },
   },
   {
     num: "V",
@@ -75,7 +75,7 @@ const CHAPTERS: Chapter[] = [
     body: "Win rate over time. Best-performing decks. Format-by-format breakdown. Not just where you are — where you came from, and what's moving. The chart that lets you know whether last week's slump was a slump or a signal.",
     flavor:
       "Growth is invisible at any one moment. Then suddenly, only growth.",
-    stat: { value: "847", label: "active players" },
+    stat: { value: "Beta", label: "August 2026" },
   },
 ];
 
