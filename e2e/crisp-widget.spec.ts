@@ -1,67 +1,54 @@
+/**
+ * E2E regression: Crisp chat widget removal (vault-mtg-tickets#860).
+ *
+ * Crisp was removed to reduce GDPR vendor DPA scope (Ramone, 2026-06-05).
+ * These tests confirm the widget is NOT injected anywhere on the site so
+ * it cannot accidentally be re-added without CI catching it.
+ */
+
 import { test, expect } from "@playwright/test";
 
-const waitForCrisp = (page: import("@playwright/test").Page) =>
-  page.waitForFunction(
-    () =>
-      typeof (window as unknown as Record<string, unknown>).CRISP_WEBSITE_ID ===
-      "string",
-    { timeout: 10_000 }
-  );
-
-test.describe("Crisp chat widget", () => {
-  test("widget script is injected into the page", async ({ page }) => {
+test.describe("Crisp chat widget removal (#860)", () => {
+  test("CRISP_WEBSITE_ID is NOT set on window (homepage)", async ({ page }) => {
     await page.goto("/");
-    await waitForCrisp(page);
+    // Give scripts a moment to execute — we are asserting absence, not presence
+    await page.waitForLoadState("networkidle");
 
-    const crispScriptPresent = await page.evaluate(() => {
-      return (
-        typeof (window as unknown as Record<string, unknown>).CRISP_WEBSITE_ID ===
-        "string"
-      );
+    const crispPresent = await page.evaluate(() => {
+      const w = window as unknown as Record<string, unknown>;
+      return w.CRISP_WEBSITE_ID !== undefined || w.$crisp !== undefined;
     });
 
-    expect(crispScriptPresent).toBe(true);
+    expect(crispPresent).toBe(false);
   });
 
-  test("CRISP_WEBSITE_ID matches expected value", async ({ page }) => {
-    await page.goto("/");
-    await waitForCrisp(page);
-
-    const websiteId = await page.evaluate(() => {
-      return (window as unknown as Record<string, unknown>)
-        .CRISP_WEBSITE_ID as string;
-    });
-
-    expect(websiteId).toBe("47bd78ac-6489-4923-9c7b-66021a36bf83");
-  });
-
-  test("widget script present on download page", async ({ page }) => {
-    await page.goto("/download");
-    await waitForCrisp(page);
-
-    const crispScriptPresent = await page.evaluate(() => {
-      return (
-        typeof (window as unknown as Record<string, unknown>).CRISP_WEBSITE_ID ===
-        "string"
-      );
-    });
-
-    expect(crispScriptPresent).toBe(true);
-  });
-
-  test("crisp globals initialised (CRISP_WEBSITE_ID set and $crisp exists)", async ({
+  test("No request to client.crisp.chat is made (homepage)", async ({
     page,
   }) => {
-    await page.goto("/");
-    await waitForCrisp(page);
-
-    const crispInitialized = await page.evaluate(() => {
-      const w = window as unknown as Record<string, unknown>;
-      return (
-        typeof w.CRISP_WEBSITE_ID === "string" && w.$crisp !== undefined
-      );
+    const crispRequests: string[] = [];
+    page.on("request", (req) => {
+      if (req.url().includes("crisp.chat")) {
+        crispRequests.push(req.url());
+      }
     });
 
-    expect(crispInitialized).toBe(true);
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    expect(crispRequests).toHaveLength(0);
+  });
+
+  test("CRISP_WEBSITE_ID is NOT set on window (download page)", async ({
+    page,
+  }) => {
+    await page.goto("/download");
+    await page.waitForLoadState("networkidle");
+
+    const crispPresent = await page.evaluate(() => {
+      const w = window as unknown as Record<string, unknown>;
+      return w.CRISP_WEBSITE_ID !== undefined || w.$crisp !== undefined;
+    });
+
+    expect(crispPresent).toBe(false);
   });
 });
