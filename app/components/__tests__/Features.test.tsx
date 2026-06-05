@@ -239,4 +239,29 @@ describe("Features — Compendium chapters (#315 PR3)", () => {
       expect(p?.getAttribute("style")).toContain("balance");
     });
   });
+
+  // ── #692 copy-accuracy assertions (Najah-approved 2026-06-04) ─────────────
+
+  it("Chapter II body uses GIHWR pick-rankings language, not 'synergy scores'", () => {
+    const { container } = render(<Features />);
+    expect(container.innerHTML).not.toContain("synergy scores");
+    expect(container.innerHTML).toContain("pick rankings");
+    expect(container.innerHTML).toContain("Win-rate data and pick rankings");
+  });
+
+  it("Chapter III body does not claim 'Opponent archetype' detection (unshipped)", () => {
+    const { container } = render(<Features />);
+    expect(container.innerHTML).not.toContain("Opponent archetype");
+  });
+
+  it("Chapter III body uses accurate match-history copy (deck mana curve + pattern)", () => {
+    render(<Features />);
+    // Use regex to match through the apostrophe which innerHTML encodes differently
+    expect(
+      screen.getByText(/Your deck.s mana curve, the turn the game turned/),
+    ).toBeTruthy();
+    expect(
+      screen.getByText(/the pattern you never saw coming across a single session/),
+    ).toBeTruthy();
+  });
 });

@@ -63,6 +63,24 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F1F5F9]">
         <AnalyticsProvider />
         {children}
+        {/* Google Analytics 4 — G-Y4YSVZF8ZD */}
+        <Script
+          id="ga4-gtag-loader"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-Y4YSVZF8ZD"
+        />
+        <Script
+          id="ga4-gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-Y4YSVZF8ZD');
+            `,
+          }}
+        />
         <Script
           id="crisp-widget"
           strategy="afterInteractive"

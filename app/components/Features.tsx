@@ -41,7 +41,7 @@ const CHAPTERS: Chapter[] = [
     name: "Blue (U)",
     virtue: "Insight",
     title: "Knowing what comes next",
-    body: "Live tier ratings, win-rate data, and synergy scores for every card in your pack — the moment it appears. The pick you would have made in twenty seconds becomes the pick you make in two.",
+    body: "Win-rate data and pick rankings for every card in your pack — updated from real play data, applied the moment the pack appears. The pick you would have made in twenty seconds becomes the pick you make in two.",
     flavor:
       "The draft is decided before the timer starts. Be the one who decided.",
     stat: { value: "A–F", label: "ratings per card" },
@@ -52,7 +52,7 @@ const CHAPTERS: Chapter[] = [
     name: "Black (B)",
     virtue: "Ambition",
     title: "The cost of every choice",
-    body: "Every match logged, every loss accounted for. Opponent archetype, your deck's mana curve, the turn the game turned. Patterns surface that you would never see across a single session — only across hundreds.",
+    body: "Every match logged, every loss accounted for. Your deck's mana curve, the turn the game turned, the pattern you never saw coming across a single session — only across hundreds.",
     flavor: "A ledger is a kind of weapon, in the right hands.",
     stat: { value: "All", label: "matches logged" },
   },
