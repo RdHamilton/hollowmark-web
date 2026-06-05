@@ -1,29 +1,39 @@
 // CTA → "Begin" — § 05
 // Atmospheric serif-italic call-to-action. Single email input + submit
-// button with stub validation, success state, and platform pills.
+// button with validation, loading state, success state (with position),
+// and platform pills.
 // Design: Cormorant Garamond display, JetBrains Mono eyebrow, sapphire palette.
 // Follows ui_kits/vaultmtg-web/CTA.jsx — Compendium editorial aesthetic.
 
 "use client";
 
 import { useState } from "react";
+import { submitWaitlist } from "../../lib/waitlistApi";
 
 export default function CTA() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [position, setPosition] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!ok) {
       setError("Please enter a valid email address.");
       return;
     }
-    // Static export — no server action available. In production this would
-    // POST to an API endpoint.
-    setSubmitted(true);
     setError("");
+    setLoading(true);
+    const result = await submitWaitlist(email);
+    setLoading(false);
+    if (result.ok) {
+      setPosition(result.position);
+      setSubmitted(true);
+    } else {
+      setError(result.error);
+    }
   }
 
   return (
@@ -137,8 +147,9 @@ export default function CTA() {
             role="status"
             style={{
               display: "inline-flex",
+              flexDirection: "column",
               alignItems: "center",
-              gap: 14,
+              gap: 10,
               padding: "18px 28px",
               borderRadius: 4,
               border: "1px solid rgba(74,144,217,0.4)",
@@ -151,7 +162,20 @@ export default function CTA() {
                 "0 0 0 1px rgba(74,144,217,0.2), 0 8px 32px rgba(74,144,217,0.15)",
             }}
           >
-            ✓&nbsp;&nbsp;You&rsquo;re on the list. We&rsquo;ll be in touch when the doors open.
+            <span>✓&nbsp;&nbsp;You&rsquo;re on the list. We&rsquo;ll be in touch when the doors open.</span>
+            {position !== null && (
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontStyle: "normal",
+                  fontSize: 13,
+                  letterSpacing: "0.08em",
+                  color: "rgba(74,144,217,0.85)",
+                }}
+              >
+                #{position} in line
+              </span>
+            )}
           </div>
         ) : (
           <form
@@ -209,6 +233,8 @@ export default function CTA() {
             />
             <button
               type="submit"
+              disabled={loading}
+              aria-disabled={loading}
               style={{
                 height: 56,
                 padding: "0 32px",
@@ -220,13 +246,14 @@ export default function CTA() {
                 fontStyle: "italic",
                 fontSize: 18,
                 fontWeight: 600,
-                cursor: "pointer",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.7 : 1,
                 boxShadow:
                   "0 0 0 1px rgba(74,144,217,0.4), 0 8px 24px rgba(74,144,217,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
                 whiteSpace: "nowrap",
               }}
             >
-              Begin the draft →
+              {loading ? "Joining…" : "Begin the draft →"}
             </button>
           </form>
         )}
