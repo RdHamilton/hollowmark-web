@@ -24,7 +24,7 @@ const COLUMNS = [
   {
     label: "Support",
     items: [
-      { label: "FAQ", href: "#faq" },
+      { label: "Help & Docs", href: "/docs" },
       { label: "Contact", href: "mailto:hello@vaultmtg.app" },
     ],
   },
