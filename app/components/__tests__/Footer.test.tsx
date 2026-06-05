@@ -81,10 +81,10 @@ describe("Footer — Colophon (#315 PR5)", () => {
     expect(discord.getAttribute("target")).toBe("_blank");
   });
 
-  it("renders the FAQ link", () => {
+  it("renders the Help & Docs link pointing to /docs", () => {
     render(<Footer />);
-    const faq = screen.getByText("FAQ");
-    expect(faq.getAttribute("href")).toBe("#faq");
+    const helpDocs = screen.getByText("Help & Docs");
+    expect(helpDocs.getAttribute("href")).toBe("/docs");
   });
 
   it("renders the Contact link as a mailto", () => {

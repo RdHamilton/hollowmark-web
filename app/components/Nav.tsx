@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { section: "§03", label: "Statistics",     href: "#statistics" },
   { section: "§05", label: "Roadmap",        href: "/roadmap" },
   { section: "§06", label: "Begin",          href: "#begin" },
+  { section: "§07", label: "Help",           href: "/docs" },
 ] as const;
 
 export default function Nav() {
