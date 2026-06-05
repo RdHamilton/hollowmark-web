@@ -42,10 +42,11 @@ describe("Nav — Compendium editorial structure (PR2)", () => {
     expect(home.getAttribute("href")).toBe("#");
   });
 
-  it("renders the three chapter-style nav links", () => {
+  it("renders the four chapter-style nav links", () => {
     render(<Nav />);
     expect(screen.getByText("The Compendium")).toBeTruthy();
     expect(screen.getByText("Statistics")).toBeTruthy();
+    expect(screen.getByText("Roadmap")).toBeTruthy();
     expect(screen.getAllByText("Begin").length).toBeGreaterThan(0);
   });
 
@@ -54,7 +55,16 @@ describe("Nav — Compendium editorial structure (PR2)", () => {
     const sections = Array.from(container.querySelectorAll("span")).filter(
       (el) => /^§\d{2}$/.test(el.textContent ?? ""),
     );
-    expect(sections.length).toBeGreaterThanOrEqual(3);
+    expect(sections.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it("renders the Roadmap nav link pointing to /roadmap", () => {
+    const { container } = render(<Nav />);
+    const roadmapLink = Array.from(container.querySelectorAll("a")).find(
+      (el) => el.getAttribute("href") === "/roadmap",
+    );
+    expect(roadmapLink).toBeTruthy();
+    expect(roadmapLink!.textContent).toBe("Roadmap");
   });
 
   it("does not retain amber accent colours in markup", () => {

@@ -4,11 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-// Chapter-style nav — each link maps to a Compendium section.
+// Chapter-style nav — each link maps to a Compendium section or a top-level page.
 const NAV_LINKS = [
   { section: "§02", label: "The Compendium", href: "#compendium" },
   { section: "§03", label: "Statistics",     href: "#statistics" },
-  { section: "§04", label: "Begin",          href: "#begin" },
+  { section: "§05", label: "Roadmap",        href: "/roadmap" },
+  { section: "§06", label: "Begin",          href: "#begin" },
 ] as const;
 
 export default function Nav() {
