@@ -1,5 +1,5 @@
 /**
- * Unit tests for OG/social meta wiring — vault-mtg-tickets#317 / #428.
+ * Unit tests for OG/social meta wiring — hollowmark-tickets#1002 / #317 / #428.
  *
  * Verifies that the shared OG metadata constants export the required
  * OpenGraph and Twitter card fields pointing to the canonical og-image
@@ -74,8 +74,8 @@ describe("SITE_BASE — vault-mtg-tickets#317", () => {
     expect(SITE_BASE.url).toBe("https://vaultmtg.app");
   });
 
-  it("SITE_BASE.siteName is VaultMTG", () => {
-    expect(SITE_BASE.siteName).toBe("VaultMTG");
+  it("SITE_BASE.siteName is Hollowmark", () => {
+    expect(SITE_BASE.siteName).toBe("Hollowmark");
   });
 
   it("SITE_BASE.title is non-empty", () => {

@@ -53,9 +53,9 @@ test.describe("Home page OG/Twitter meta — vault-mtg-tickets#428", () => {
     expect(content!.length).toBeGreaterThan(0);
   });
 
-  test("og:title contains VaultMTG", async ({ page }) => {
+  test("og:title contains Hollowmark", async ({ page }) => {
     const content = await getMetaContent(page, 'meta[property="og:title"]');
-    expect(content).toContain("VaultMTG");
+    expect(content).toContain("Hollowmark");
   });
 
   test("og:description is present and non-empty", async ({ page }) => {
@@ -64,9 +64,9 @@ test.describe("Home page OG/Twitter meta — vault-mtg-tickets#428", () => {
     expect(content!.length).toBeGreaterThan(0);
   });
 
-  test("og:site_name is VaultMTG", async ({ page }) => {
+  test("og:site_name is Hollowmark", async ({ page }) => {
     const content = await getMetaContent(page, 'meta[property="og:site_name"]');
-    expect(content).toBe("VaultMTG");
+    expect(content).toBe("Hollowmark");
   });
 
   test("og:type is website", async ({ page }) => {
@@ -115,10 +115,10 @@ test.describe("/roadmap OG/Twitter meta — vault-mtg-tickets#428", () => {
     expect(content).toBe(CANONICAL_OG_IMAGE);
   });
 
-  test("og:title contains Roadmap and VaultMTG", async ({ page }) => {
+  test("og:title contains Roadmap and Hollowmark", async ({ page }) => {
     const content = await getMetaContent(page, 'meta[property="og:title"]');
     expect(content).toContain("Roadmap");
-    expect(content).toContain("VaultMTG");
+    expect(content).toContain("Hollowmark");
   });
 
   test("og:description is specific to the roadmap page", async ({ page }) => {
@@ -156,10 +156,10 @@ test.describe("/download OG/Twitter meta — vault-mtg-tickets#428", () => {
     expect(content).toBe(CANONICAL_OG_IMAGE);
   });
 
-  test("og:title contains Download and VaultMTG", async ({ page }) => {
+  test("og:title contains Download and Hollowmark", async ({ page }) => {
     const content = await getMetaContent(page, 'meta[property="og:title"]');
     expect(content).toContain("Download");
-    expect(content).toContain("VaultMTG");
+    expect(content).toContain("Hollowmark");
   });
 
   test("og:url is the /download URL", async ({ page }) => {

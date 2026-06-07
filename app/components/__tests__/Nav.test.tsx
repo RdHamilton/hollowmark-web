@@ -17,7 +17,7 @@ import Nav from "../Nav";
 afterEach(cleanup);
 
 describe("Nav — Compendium editorial structure (PR2)", () => {
-  it("renders the VaultMTG mark icon (aria-hidden)", () => {
+  it("renders the Hollowmark mark icon (aria-hidden)", () => {
     const { container } = render(<Nav />);
     const marks = container.querySelectorAll('img[alt=""]');
     expect(marks.length).toBeGreaterThan(0);
@@ -25,10 +25,10 @@ describe("Nav — Compendium editorial structure (PR2)", () => {
     expect(mark.getAttribute("src")).toContain("logo-vaultmtg-mark.svg");
   });
 
-  it("renders the serif italic VaultMTG wordmark logotype", () => {
+  it("renders the serif italic Hollowmark wordmark logotype", () => {
     const { container } = render(<Nav />);
     const logotype = Array.from(container.querySelectorAll("span")).find(
-      (el) => el.textContent === "VaultMTG",
+      (el) => el.textContent === "Hollowmark",
     );
     expect(logotype).toBeTruthy();
     expect(logotype!.style.fontStyle).toBe("italic");
@@ -38,7 +38,7 @@ describe("Nav — Compendium editorial structure (PR2)", () => {
 
   it("links the home logo anchor to the top of the page", () => {
     render(<Nav />);
-    const home = screen.getByLabelText("VaultMTG home");
+    const home = screen.getByLabelText("Hollowmark home");
     expect(home.getAttribute("href")).toBe("#");
   });
 
@@ -172,7 +172,7 @@ describe("Nav token-alias sweep (#344/#346)", () => {
   it("uses var(--color-vault-sapphire) for the wordmark logotype", () => {
     const { container } = render(<Nav />);
     const logotype = Array.from(container.querySelectorAll("span")).find(
-      (el) => el.textContent === "VaultMTG",
+      (el) => el.textContent === "Hollowmark",
     );
     expect(logotype?.getAttribute("style")).toContain("var(--color-vault-sapphire)");
   });

@@ -15,9 +15,9 @@ import { MilestoneCard } from "./MilestoneCard";
 import type { Milestone } from "./milestones";
 import { MILESTONES, BETA_TARGET } from "./milestones";
 
-const ROADMAP_TITLE = "Roadmap — VaultMTG";
+const ROADMAP_TITLE = "Roadmap — Hollowmark";
 const ROADMAP_DESCRIPTION =
-  "See what VaultMTG is building now and what is coming next on the road to beta launch in August 2026.";
+  "See what Hollowmark is building now and what is coming next on the road to beta launch in December 2026.";
 
 export const metadata: Metadata = {
   title: ROADMAP_TITLE,
