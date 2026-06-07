@@ -9,9 +9,9 @@ import {
   OG_IMAGE_URL,
 } from "@/lib/og-metadata";
 
-const DOWNLOAD_TITLE = "Download VaultMTG — Your edge. Every draft. Every match.";
+const DOWNLOAD_TITLE = "Download Hollowmark — Your edge. Every draft. Every match.";
 const DOWNLOAD_DESCRIPTION =
-  "Download the VaultMTG companion app for MTG Arena. Get real-time draft ratings, deck analysis, and full match history — available for Mac and Windows.";
+  "Download the Hollowmark companion app for MTG Arena. Get real-time draft ratings, deck analysis, and full match history — available for Mac and Windows.";
 
 export const metadata: Metadata = {
   title: DOWNLOAD_TITLE,
@@ -61,7 +61,7 @@ export default function DownloadPage() {
             style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic" }}
           >
             Download{" "}
-            <span className="text-[#4A90D9]">VaultMTG</span>
+            <span className="text-[#4A90D9]">Hollowmark</span>
           </h1>
 
           {/* Value prop */}
@@ -78,7 +78,7 @@ export default function DownloadPage() {
             {/* TODO: Replace href with actual macOS installer URL once artifact is hosted */}
             <a
               href="#"
-              aria-label="Download VaultMTG for Mac"
+              aria-label="Download Hollowmark for Mac"
               className="inline-flex w-full items-center justify-center gap-3 rounded-lg bg-[#4A90D9] px-8 py-4 text-base font-semibold text-[#0D1117] shadow-lg transition-colors hover:bg-[#7CB5F0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2C6BAA] sm:w-auto"
             >
               <ArrowDownTrayIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -92,7 +92,7 @@ export default function DownloadPage() {
             {/* TODO: Replace href with actual Windows installer URL once artifact is hosted */}
             <a
               href="#"
-              aria-label="Download VaultMTG for Windows"
+              aria-label="Download Hollowmark for Windows"
               className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-[#2A3347] bg-[#161C26] px-8 py-4 text-base font-medium text-[#F1F5F9] transition-colors hover:border-[#4A90D9]/50 hover:text-[#4A90D9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2C6BAA] sm:w-auto"
             >
               <ArrowDownTrayIcon className="h-5 w-5 shrink-0" aria-hidden="true" />

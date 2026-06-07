@@ -44,8 +44,8 @@ describe("/docs page OG metadata compatibility — vault-mtg-tickets#406", () =>
     expect(TWITTER_CARD).toBe("summary_large_image");
   });
 
-  it("SITE_BASE.siteName is VaultMTG (used in /docs openGraph.siteName)", () => {
-    expect(SITE_BASE.siteName).toBe("VaultMTG");
+  it("SITE_BASE.siteName is Hollowmark (used in /docs openGraph.siteName)", () => {
+    expect(SITE_BASE.siteName).toBe("Hollowmark");
   });
 
   it("SITE_BASE.url does not end with a slash (canonical URL safety)", () => {

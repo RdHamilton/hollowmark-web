@@ -66,7 +66,7 @@ export default function Footer() {
               color: "var(--color-vault-sapphire)",
             }}
           >
-            VaultMTG
+            Hollowmark
           </span>
           <p
             style={{
@@ -184,7 +184,7 @@ export default function Footer() {
             color: "rgba(241,245,249,0.35)",
           }}
         >
-          <span>&copy; {year} VaultMTG · All rights reserved</span>
+          <span>&copy; {year} Hollowmark · All rights reserved</span>
           <span>Set in Cormorant Garamond, Inter, JetBrains Mono</span>
           <span>Vol. I · No. 1 · 2026</span>
         </div>
@@ -203,7 +203,7 @@ export default function Footer() {
             textWrap: "pretty" as unknown as undefined,
           }}
         >
-          VaultMTG is not affiliated with, endorsed by, or produced by Wizards
+          Hollowmark is not affiliated with, endorsed by, or produced by Wizards
           of the Coast or Hasbro. Magic: The Gathering and all related marks
           are trademarks of their respective owners.
         </p>

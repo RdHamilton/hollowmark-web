@@ -3,7 +3,7 @@
 // button with validation, loading state, success state (with position),
 // and platform pills.
 // Design: Cormorant Garamond display, JetBrains Mono eyebrow, sapphire palette.
-// Follows ui_kits/vaultmtg-web/CTA.jsx — Compendium editorial aesthetic.
+// Follows ui_kits/vaultmtg-web/CTA.jsx — Compendium editorial aesthetic. (#1002 rebrand)
 
 "use client";
 
@@ -138,7 +138,7 @@ export default function CTA() {
             textWrap: "pretty" as unknown as undefined,
           }}
         >
-          Join the waitlist and receive early access when VaultMTG launches.
+          Join the waitlist and receive early access when Hollowmark launches.
           Free during beta — no credit card, no obligation.
         </p>
 

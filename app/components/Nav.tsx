@@ -28,7 +28,7 @@ export default function Nav() {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         {/* Wordmark — mark icon + serif italic logotype */}
-        <a href="#" className="flex items-center gap-3" aria-label="VaultMTG home">
+        <a href="#" className="flex items-center gap-3" aria-label="Hollowmark home">
           <Image
             src="/logo-vaultmtg-mark.svg"
             alt=""
@@ -49,7 +49,7 @@ export default function Nav() {
               lineHeight: 1,
             }}
           >
-            VaultMTG
+            Hollowmark
           </span>
         </a>
 

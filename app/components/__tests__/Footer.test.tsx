@@ -18,10 +18,10 @@ describe("Footer — Colophon (#315 PR5)", () => {
     expect(screen.getByText(/§ Colophon/i)).toBeTruthy();
   });
 
-  it("renders the VaultMTG brand name in the colophon header", () => {
+  it("renders the Hollowmark brand name in the colophon header", () => {
     render(<Footer />);
-    // "VaultMTG" appears as the serif italic brand display (not a logo image)
-    const brand = screen.getByText("VaultMTG");
+    // "Hollowmark" appears as the serif italic brand display (not a logo image)
+    const brand = screen.getByText("Hollowmark");
     expect(brand).toBeTruthy();
     expect(brand.getAttribute("style")).toContain("Cormorant Garamond");
   });
@@ -129,8 +129,8 @@ describe("Footer — Colophon (#315 PR5)", () => {
   it("does not render the wordmark <img> / Image (replaced by serif brand text)", () => {
     render(<Footer />);
     // The new Colophon footer replaces the Image with a serif-italic span —
-    // there should be no <img> with alt="VaultMTG".
-    const logo = screen.queryByAltText("VaultMTG");
+    // there should be no <img> with alt="Hollowmark".
+    const logo = screen.queryByAltText("Hollowmark");
     expect(logo).toBeNull();
   });
 
