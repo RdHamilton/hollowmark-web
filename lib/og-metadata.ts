@@ -7,8 +7,10 @@
  * component stubs or framework mocks.
  */
 
-/** Absolute URL to the canonical branded OG image (1200×630 PNG). */
-export const OG_IMAGE_URL = "https://vaultmtg.app/og-image.png" as const;
+/** Absolute URL to the canonical branded OG image (1200×630 PNG).
+ *  #1014: updated to hollowmark.app hostname; image swapped to the Hollowmark
+ *  branded asset from the Ray Hamilton Engineering Design System bundle. */
+export const OG_IMAGE_URL = "https://hollowmark.app/og-image.png" as const;
 
 export const OG_IMAGE_WIDTH = 1200 as const;
 export const OG_IMAGE_HEIGHT = 630 as const;
@@ -29,7 +31,7 @@ export const SITE_BASE = {
   title: "Hollowmark — Your edge. Every draft. Every match.",
   description:
     "Hollowmark is the MTG Arena companion app for serious players. Real-time draft ratings, deck analysis, collection sync, and match history — all in one place.",
-  url: "https://vaultmtg.app",
+  url: "https://hollowmark.app",   /* #1014: updated from vaultmtg.app */
   siteName: "Hollowmark",
   ogDescription:
     "Real-time draft ratings, deck analysis, collection sync, and match history for MTG Arena.",
