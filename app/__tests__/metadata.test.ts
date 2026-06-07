@@ -1,9 +1,10 @@
 /**
- * Unit tests for OG/social meta wiring — hollowmark-tickets#1002 / #317 / #428.
+ * Unit tests for OG/social meta wiring — hollowmark-tickets#1002 / #317 / #428 / #1014.
  *
  * Verifies that the shared OG metadata constants export the required
  * OpenGraph and Twitter card fields pointing to the canonical og-image
- * asset hosted at https://vaultmtg.app/og-image.png.
+ * asset hosted at https://hollowmark.app/og-image.png (#1014: updated from
+ * vaultmtg.app to hollowmark.app; image swapped to the Hollowmark design system asset).
  *
  * Running: npm run test
  */
@@ -18,7 +19,7 @@ import {
   ogImage,
 } from "../../lib/og-metadata";
 
-const EXPECTED_OG_IMAGE_URL = "https://vaultmtg.app/og-image.png";
+const EXPECTED_OG_IMAGE_URL = "https://hollowmark.app/og-image.png";
 
 // ---------------------------------------------------------------------------
 // OG image constants
@@ -70,8 +71,8 @@ describe("ogImage descriptor — vault-mtg-tickets#317", () => {
 // ---------------------------------------------------------------------------
 
 describe("SITE_BASE — vault-mtg-tickets#317", () => {
-  it("SITE_BASE.url is https://vaultmtg.app", () => {
-    expect(SITE_BASE.url).toBe("https://vaultmtg.app");
+  it("SITE_BASE.url is https://hollowmark.app (#1014)", () => {
+    expect(SITE_BASE.url).toBe("https://hollowmark.app");
   });
 
   it("SITE_BASE.siteName is Hollowmark", () => {
@@ -98,10 +99,10 @@ describe("SITE_BASE — vault-mtg-tickets#317", () => {
 // ---------------------------------------------------------------------------
 
 describe("Cross-page metadata consistency — vault-mtg-tickets#428", () => {
-  it("all pages share the same og:image URL", () => {
+  it("all pages share the same og:image URL (#1014: hollowmark.app)", () => {
     // The single canonical OG image is used site-wide; page-level metadata
     // must never diverge from the design-system asset path.
-    expect(OG_IMAGE_URL).toBe("https://vaultmtg.app/og-image.png");
+    expect(OG_IMAGE_URL).toBe("https://hollowmark.app/og-image.png");
     expect(ogImage.url).toBe(OG_IMAGE_URL);
   });
 

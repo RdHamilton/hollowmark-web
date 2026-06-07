@@ -24,11 +24,11 @@ const EXPECTED_DOCS_URL = `${SITE_BASE.url}/docs`;
 
 describe("/docs page OG metadata compatibility — vault-mtg-tickets#406", () => {
   it("SITE_BASE.url is the base for the /docs canonical URL", () => {
-    expect(EXPECTED_DOCS_URL).toBe("https://vaultmtg.app/docs");
+    expect(EXPECTED_DOCS_URL).toBe("https://hollowmark.app/docs");
   });
 
   it("OG_IMAGE_URL is reused on /docs (cross-page consistency, #428)", () => {
-    expect(OG_IMAGE_URL).toBe("https://vaultmtg.app/og-image.png");
+    expect(OG_IMAGE_URL).toBe("https://hollowmark.app/og-image.png");
   });
 
   it("ogImage.url matches OG_IMAGE_URL (used in /docs openGraph.images)", () => {
@@ -53,6 +53,6 @@ describe("/docs page OG metadata compatibility — vault-mtg-tickets#406", () =>
   });
 
   it("/docs URL is derived from SITE_BASE.url plus /docs path", () => {
-    expect(EXPECTED_DOCS_URL).toMatch(/^https:\/\/vaultmtg\.app\/docs$/);
+    expect(EXPECTED_DOCS_URL).toMatch(/^https:\/\/hollowmark\.app\/docs$/);
   });
 });
