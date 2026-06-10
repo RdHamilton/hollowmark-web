@@ -96,8 +96,8 @@ describe("/privacy page — hollowmark-tickets#881", () => {
   });
 
   it("renders '8. Children's Privacy' heading", () => {
-    render(<PrivacyPage />);
-    expect(screen.getByText(/8\. Children's Privacy/i)).toBeTruthy();
+    const { container } = render(<PrivacyPage />);
+    expect(container.textContent).toMatch(/8\. Children.s Privacy/i);
   });
 
   it("renders '9. International Users — GDPR and UK GDPR' heading", () => {
@@ -177,8 +177,8 @@ describe("/privacy page — hollowmark-tickets#881", () => {
   });
 
   it("renders the Information Commissioner's Office reference", () => {
-    render(<PrivacyPage />);
-    expect(screen.getByText(/Information Commissioner's Office/i)).toBeTruthy();
+    const { container } = render(<PrivacyPage />);
+    expect(container.textContent).toMatch(/Information Commissioner.s Office/i);
   });
 
   // ── ML training data de-identification language ────────────────────────────

@@ -111,25 +111,6 @@ function SectionMarker({ marker }: { marker: string }) {
   return <div style={EYEBROW_STYLE}>{marker}</div>;
 }
 
-function SectionHeading({
-  id,
-  marker,
-  children,
-}: {
-  id: string;
-  marker: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} aria-labelledby={`${id}-heading`} style={SECTION_STYLE}>
-      <SectionMarker marker={marker} />
-      <h2 id={`${id}-heading`} style={H2_STYLE}>
-        {children}
-      </h2>
-    </section>
-  );
-}
-
 // ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
@@ -253,8 +234,8 @@ export default function TermsPage() {
               VaultMTG is an independent, unofficial companion tool for Magic: The Gathering Arena
               (MTGA). VaultMTG is NOT affiliated with, endorsed by, or sponsored by Wizards of the
               Coast LLC or Hasbro, Inc. Use of VaultMTG does not affect your relationship with
-              Wizards of the Coast or your MTGA account. "Magic: The Gathering," "Magic: The
-              Gathering Arena," and all associated card names, game mechanics, set names, and artwork
+              Wizards of the Coast or your MTGA account. &ldquo;Magic: The Gathering,&rdquo; &ldquo;Magic: The
+              Gathering Arena,&rdquo; and all associated card names, game mechanics, set names, and artwork
               are the intellectual property of Wizards of the Coast LLC.
             </p>
           </section>
@@ -268,7 +249,7 @@ export default function TermsPage() {
             <p style={BODY_STYLE}>
               By accessing and using the VaultMTG Service — including the web application at{" "}
               <code>app.vaultmtg.app</code>, the desktop application, and all related services — you
-              agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use
+              agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;). If you do not agree, do not use
               the Service.
             </p>
             <p style={BODY_STYLE}>
@@ -276,8 +257,8 @@ export default function TermsPage() {
               <strong style={{ color: "rgba(241,245,249,0.9)" }}>
                 Ray Hamilton Engineering, LLC
               </strong>
-              , a Georgia limited liability company ("Ray Hamilton Engineering," "we," "us," or
-              "our").
+              , a Georgia limited liability company (&ldquo;Ray Hamilton Engineering,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or
+              &ldquo;our&rdquo;).
             </p>
             <p style={BODY_STYLE}>
               <strong style={{ color: "rgba(241,245,249,0.9)" }}>Eligibility.</strong> You must be
@@ -310,7 +291,7 @@ export default function TermsPage() {
               The Service includes a desktop application that you install on your own computer. The
               desktop application reads MTGA game log files stored locally on your own device (the
               same log files that MTGA generates as you play). The application does not modify the
-              MTGA game client, inject code, or interact with MTGA's network traffic. It reads files
+              MTGA game client, inject code, or interact with MTGA&rsquo;s network traffic. It reads files
               from your MTGA installation directory only.
             </p>
             <p style={BODY_STYLE}>
@@ -336,14 +317,14 @@ export default function TermsPage() {
                 authorization on your device and operates under a least-privilege model (it does not
                 run as root and does not install a persistent privileged service). You will be asked
                 to consent to enhanced mode via a plain-language dialog before it is enabled; you
-                may revoke it at any time from the application's Settings.
+                may revoke it at any time from the application&rsquo;s Settings.
               </li>
             </ul>
             <p style={BODY_STYLE}>
               <strong style={{ color: "rgba(241,245,249,0.9)" }}>Current Beta Status.</strong> The
               Service is in closed beta, available by invitation only. Features, pricing, and
               availability are subject to change without notice during the beta phase. The Service is
-              provided "as-is" and may be modified or discontinued at any time, with or without
+              provided &ldquo;as-is&rdquo; and may be modified or discontinued at any time, with or without
               notice.
             </p>
           </section>
@@ -426,7 +407,7 @@ export default function TermsPage() {
             <h3 style={H3_STYLE}>4.2 Your Responsibility for Local Machine Security</h3>
             <p style={BODY_STYLE}>
               You are responsible for maintaining the security of your local machine. We are not
-              responsible for breaches of your device's security that expose your MTGA log data or
+              responsible for breaches of your device&rsquo;s security that expose your MTGA log data or
               VaultMTG account credentials.
             </p>
             <h3 style={H3_STYLE}>4.3 MTGA Terms of Service — Your Obligation</h3>
@@ -522,7 +503,7 @@ export default function TermsPage() {
                 channels
               </li>
               <li>
-                Use VaultMTG's API endpoints outside the intended use of the VaultMTG application
+                Use VaultMTG&rsquo;s API endpoints outside the intended use of the VaultMTG application
               </li>
             </ul>
             <h3 style={H3_STYLE}>6.3 Your Data</h3>
@@ -538,7 +519,7 @@ export default function TermsPage() {
             <p style={BODY_STYLE}>
               The Service may include third-party content used under license (for example, card data
               from Scryfall, set information, card imagery). We do not claim ownership of such
-              content. Use of such content is subject to the respective third parties' terms.
+              content. Use of such content is subject to the respective third parties&rsquo; terms.
             </p>
           </section>
 
@@ -550,7 +531,7 @@ export default function TermsPage() {
             </h2>
             <div style={CALLOUT_STYLE}>
               <p style={{ margin: "0 0 12px", color: "rgba(241,245,249,0.72)" }}>
-                THE SERVICE IS PROVIDED "AS-IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND,
+                THE SERVICE IS PROVIDED &ldquo;AS-IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTY OF ANY KIND,
                 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
               </p>
               <ul style={{ ...UL_STYLE, margin: "0 0 12px 0" }}>
@@ -668,7 +649,7 @@ export default function TermsPage() {
               10. Privacy
             </h2>
             <p style={BODY_STYLE}>
-              VaultMTG's handling of your personal information is governed by our{" "}
+              VaultMTG&rsquo;s handling of your personal information is governed by our{" "}
               <a
                 href="/privacy"
                 style={{
@@ -693,7 +674,7 @@ export default function TermsPage() {
             <p style={BODY_STYLE}>
               You agree to indemnify, defend, and hold harmless Ray Hamilton Engineering, LLC and
               its officers, directors, employees, and agents from and against any claims, damages,
-              losses, costs, and expenses (including reasonable attorneys' fees) arising from:
+              losses, costs, and expenses (including reasonable attorneys&rsquo; fees) arising from:
             </p>
             <ul style={UL_STYLE}>
               <li>Your use of the Service</li>
@@ -740,7 +721,7 @@ export default function TermsPage() {
               </p>
               <p style={{ margin: "0 0 12px", color: "rgba(241,245,249,0.72)" }}>
                 Any dispute, claim, or controversy arising out of or relating to these Terms or to
-                your use of the Service (a "Dispute") will be resolved by{" "}
+                your use of the Service (a &ldquo;Dispute&rdquo;) will be resolved by{" "}
                 <strong style={{ color: "rgba(241,245,249,0.9)" }}>
                   binding individual arbitration
                 </strong>{" "}
@@ -755,8 +736,8 @@ export default function TermsPage() {
                 under its Consumer Arbitration Rules then in effect. The arbitration will be
                 conducted by a single arbitrator. The seat of arbitration is{" "}
                 <strong style={{ color: "rgba(241,245,249,0.9)" }}>Atlanta, Georgia</strong>, and
-                proceedings may be conducted in person, by phone, or by video at the arbitrator's
-                reasonable discretion. The arbitrator's award is final and binding on the parties
+                proceedings may be conducted in person, by phone, or by video at the arbitrator&rsquo;s
+                reasonable discretion. The arbitrator&rsquo;s award is final and binding on the parties
                 and may be entered as a judgment in any court of competent jurisdiction. You and Ray
                 Hamilton Engineering, LLC each waive any right to a jury trial.
               </p>
@@ -767,7 +748,7 @@ export default function TermsPage() {
                 YOU AND RAY HAMILTON ENGINEERING, LLC AGREE THAT EACH MAY BRING CLAIMS AGAINST THE
                 OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS
                 MEMBER IN ANY PURPORTED CLASS, CONSOLIDATED, OR REPRESENTATIVE PROCEEDING. The
-                arbitrator may not consolidate more than one person's claims and may not preside
+                arbitrator may not consolidate more than one person&rsquo;s claims and may not preside
                 over any form of representative or class proceeding. If this class-action waiver is
                 found unenforceable as to a particular claim, that claim (and only that claim) shall
                 proceed in court, and the remainder of this Section 12 shall remain enforceable.
@@ -786,8 +767,8 @@ export default function TermsPage() {
               <strong style={{ color: "rgba(241,245,249,0.9)" }}>30 days</strong> of the date you
               first agree to these Terms to{" "}
               <code>legal@vaultmtg.app</code>. The notice must include your full name, the email
-              associated with your VaultMTG account, and the statement "I opt out of the arbitration
-              agreement and class-action waiver." If you opt out, this Section 12 (other than the
+              associated with your VaultMTG account, and the statement &ldquo;I opt out of the arbitration
+              agreement and class-action waiver.&rdquo; If you opt out, this Section 12 (other than the
               governing-law provision in Section 12.2) does not apply to you.
             </p>
             <h3 style={H3_STYLE}>12.7 Survival</h3>
@@ -806,7 +787,7 @@ export default function TermsPage() {
               We may update these Terms at any time. We will notify you of material changes by:
             </p>
             <ul style={UL_STYLE}>
-              <li>Updating the "Last Updated" date below</li>
+              <li>Updating the &ldquo;Last Updated&rdquo; date below</li>
               <li>Posting a notice on the Service or website</li>
               <li>Sending an email notification for significant changes</li>
             </ul>

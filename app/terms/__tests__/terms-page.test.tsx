@@ -190,8 +190,8 @@ describe("/terms page — hollowmark-tickets#880", () => {
   // ── AS-IS warranty disclaimer ──────────────────────────────────────────────
 
   it("renders AS-IS warranty disclaimer language", () => {
-    render(<TermsPage />);
-    expect(screen.getByText(/"AS-IS" AND "AS AVAILABLE"/i)).toBeTruthy();
+    const { container } = render(<TermsPage />);
+    expect(container.textContent).toMatch(/AS-IS.*AS AVAILABLE/i);
   });
 
   // ── Footer present ─────────────────────────────────────────────────────────

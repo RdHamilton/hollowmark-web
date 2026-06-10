@@ -251,14 +251,14 @@ export default function PrivacyPage() {
             <p style={BODY_STYLE}>
               VaultMTG is an independent, unofficial companion tool for Magic: The Gathering Arena
               (MTGA). VaultMTG is NOT affiliated with, endorsed by, or sponsored by Wizards of the
-              Coast LLC or Hasbro, Inc. "Magic: The Gathering," "Magic: The Gathering Arena," and
+              Coast LLC or Hasbro, Inc. &ldquo;Magic: The Gathering,&rdquo; &ldquo;Magic: The Gathering Arena,&rdquo; and
               all associated card names, game mechanics, set names, and artwork are the intellectual
               property of Wizards of the Coast LLC.
             </p>
             <p style={{ ...BODY_STYLE, margin: 0 }}>
               VaultMTG reads MTGA game log files stored on your local device to provide analytics.
               The VaultMTG desktop application does not modify the MTGA game client, inject code, or
-              interact with MTGA's network traffic.
+              interact with MTGA&rsquo;s network traffic.
             </p>
           </section>
 
@@ -269,7 +269,7 @@ export default function PrivacyPage() {
               1. Introduction
             </h2>
             <p style={BODY_STYLE}>
-              VaultMTG ("we," "us," "our," or "Company") is a service operated by{" "}
+              VaultMTG (&ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our,&rdquo; or &ldquo;Company&rdquo;) is a service operated by{" "}
               <strong style={{ color: "rgba(241,245,249,0.9)" }}>
                 Ray Hamilton Engineering, LLC
               </strong>
@@ -291,7 +291,7 @@ export default function PrivacyPage() {
               <li>
                 The VaultMTG desktop application (available for macOS and Windows)
               </li>
-              <li>All related services (collectively, the "Service")</li>
+              <li>All related services (collectively, the &ldquo;Service&rdquo;)</li>
             </ul>
             <p style={BODY_STYLE}>
               <strong style={{ color: "rgba(241,245,249,0.9)" }}>Closed Beta Notice.</strong> The
@@ -338,14 +338,14 @@ export default function PrivacyPage() {
                 <strong style={{ color: "rgba(241,245,249,0.85)" }}>
                   Session tokens and login event timestamps
                 </strong>{" "}
-                — managed by Clerk; stored in Clerk's infrastructure.
+                — managed by Clerk; stored in Clerk&rsquo;s infrastructure.
               </li>
             </ul>
             <p style={BODY_STYLE}>
               This data is collected via Clerk Identity Platform. We do not roll custom JWT logic.
             </p>
 
-            <h3 style={H3_STYLE}>2.2 MTGA Gameplay Data (Desktop Application — User's Own Data)</h3>
+            <h3 style={H3_STYLE}>2.2 MTGA Gameplay Data (Desktop Application — User&rsquo;s Own Data)</h3>
             <p style={BODY_STYLE}>
               The VaultMTG desktop application reads MTGA log files stored on your local device.
               These are the same log files that MTGA writes as you play — we do not access any files
@@ -362,7 +362,7 @@ export default function PrivacyPage() {
               <li>Deck composition used in each match (card IDs and quantities)</li>
               <li>
                 Game decisions and play-by-play at a structural level (card plays, turns, actions —
-                as recorded in MTGA's GRE message log)
+                as recorded in MTGA&rsquo;s GRE message log)
               </li>
               <li>Opponent deck archetype information (as visible in your own MTGA log)</li>
               <li>Event/format information (e.g., Standard, Draft, Premier Draft)</li>
@@ -397,7 +397,7 @@ export default function PrivacyPage() {
             </ul>
             <p style={BODY_STYLE}>
               This log data belongs to you and reflects your own MTGA gameplay. We transmit it from
-              your device to our servers for storage and to power the Service's analytics,
+              your device to our servers for storage and to power the Service&rsquo;s analytics,
               recommendations, and history features. We do not sell this data. We do not share it
               with any party other than the sub-processors listed in Section 5.
             </p>
@@ -941,7 +941,7 @@ export default function PrivacyPage() {
             <h3 style={H3_STYLE}>6.2 Correction</h3>
             <p style={BODY_STYLE}>
               You may update your account name and email preferences at any time in the application
-              Settings page. Email changes go through Clerk's account-update flow. You may also
+              Settings page. Email changes go through Clerk&rsquo;s account-update flow. You may also
               request correction of any inaccurate personal data by contacting us.
             </p>
 
@@ -1012,7 +1012,7 @@ export default function PrivacyPage() {
               The <code>vaultmtg.app</code> marketing site uses a cookie-consent banner for visitors
               located in the European Economic Area, United Kingdom, and Switzerland.
               Non-strictly-necessary cookies and tags (including GA4) are loaded only after you
-              provide consent. You may change your consent at any time via the "Cookie Preferences"
+              provide consent. You may change your consent at any time via the &ldquo;Cookie Preferences&rdquo;
               control in the site footer.
             </p>
             <p style={BODY_STYLE}>
@@ -1032,7 +1032,7 @@ export default function PrivacyPage() {
               If you are in the EEA, UK, or Switzerland and believe our processing of your personal
               data infringes applicable data-protection law, you have the right to lodge a complaint
               with your national data-protection supervisory authority. For UK users, this is the
-              Information Commissioner's Office (ico.org.uk). For EEA users, it is the supervisory
+              Information Commissioner&rsquo;s Office (ico.org.uk). For EEA users, it is the supervisory
               authority in your country of residence.
             </p>
           </section>
@@ -1104,7 +1104,7 @@ export default function PrivacyPage() {
           <section id="section-8" aria-labelledby="section-8-heading" style={SECTION_STYLE}>
             <SectionMarker marker="§ 8" />
             <h2 id="section-8-heading" style={H2_STYLE}>
-              8. Children's Privacy
+              8. Children&rsquo;s Privacy
             </h2>
             <p style={BODY_STYLE}>
               The Service is not directed to children under the age of 13. We do not knowingly
@@ -1251,7 +1251,7 @@ export default function PrivacyPage() {
               changes by:
             </p>
             <ul style={UL_STYLE}>
-              <li>Updating the "Last Updated" date below</li>
+              <li>Updating the &ldquo;Last Updated&rdquo; date below</li>
               <li>Posting a notice on the Service</li>
               <li>Sending an email notification for significant changes affecting your rights</li>
             </ul>
