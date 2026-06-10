@@ -1,0 +1,41 @@
+# Build-failure alert caller — hollowmark-web repo.
+#
+# Fires whenever a tracked workflow run on main completes. If conclusion is
+# 'failure', delegates to the reusable build-failure-alert.yml in hollowmark-infra
+# which reads the Discord bot token from SSM and posts to #team.
+#
+# AC3: only 'failure' triggers a notification; 'cancelled' and 'success' are
+# explicitly ignored (the if: condition below).
+#
+# Loop prevention: this caller listens only to the workflows listed below.
+# "Build Failure Alert (reusable)" is not listed, so this workflow cannot
+# trigger itself.
+#
+# IAM: uses AWS_DEPLOY_ROLE_ARN (github-actions-oidc-deploy). The SSMParameterRead
+# Sid in that role grants ssm:GetParameter on arn:aws:ssm:...:parameter/vaultmtg/*,
+# which covers /vaultmtg/prod/discord-bot-token. No new IAM changes required.
+
+name: Build Failure Notify (hollowmark-web)
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+      - Deploy Marketing Site to S3 + CloudFront
+      - Production Smoke Ping
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  alert:
+    name: Alert on failure
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    uses: RdHamilton/hollowmark-infra/.github/workflows/build-failure-alert.yml@main
+    with:
+      workflow_name: ${{ github.event.workflow_run.name }}
+      run_url: ${{ github.event.workflow_run.html_url }}
+      repo: RdHamilton/hollowmark-web
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
