@@ -61,6 +61,12 @@ describe("Footer — Colophon (#315 PR5)", () => {
     expect(link.getAttribute("href")).toBe("/terms");
   });
 
+  it("renders the CCPA Do Not Sell or Share link in the Legal column", () => {
+    render(<Footer />);
+    const link = screen.getByText("Do Not Sell or Share My Personal Information");
+    expect(link.getAttribute("href")).toBe("/privacy#ccpa");
+  });
+
   it("uses the live Discord invite URL (not the design-kit placeholder)", () => {
     render(<Footer />);
     const discord = screen.getByText("Discord");

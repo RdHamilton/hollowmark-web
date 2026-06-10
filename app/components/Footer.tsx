@@ -12,6 +12,7 @@ const COLUMNS = [
     items: [
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
+      { label: "Do Not Sell or Share My Personal Information", href: "/privacy#ccpa" },
     ],
   },
   {

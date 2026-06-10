@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
-import Script from "next/script";
 import AnalyticsProvider from "./components/AnalyticsProvider";
+import ConsentBanner, { ConsentModeDefaultBlock } from "./components/ConsentBanner";
 import {
   ogImage,
   SITE_BASE,
@@ -61,26 +61,16 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#0D1117] text-[#F1F5F9]">
+        {/*
+          Consent Mode v2 default-block: strategy="beforeInteractive" is
+          injected into the initial server HTML before any Next.js code runs,
+          denying analytics_storage/ad_storage for all visitors before any
+          GA4 loader fires. Must be inside <body> per Next.js 16 App Router.
+        */}
+        <ConsentModeDefaultBlock />
         <AnalyticsProvider />
         {children}
-        {/* Google Analytics 4 — G-Y4YSVZF8ZD */}
-        <Script
-          id="ga4-gtag-loader"
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-Y4YSVZF8ZD"
-        />
-        <Script
-          id="ga4-gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-Y4YSVZF8ZD');
-            `,
-          }}
-        />
+        <ConsentBanner />
       </body>
     </html>
   );
