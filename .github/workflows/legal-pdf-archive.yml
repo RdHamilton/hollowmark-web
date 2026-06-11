@@ -25,6 +25,10 @@ on:
         required: false
         default: ""
 
+concurrency:
+  group: legal-pdf-archive
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

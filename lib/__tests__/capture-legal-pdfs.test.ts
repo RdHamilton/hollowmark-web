@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { buildOutputPath, buildPdfConfig, LEGAL_PAGES } from "../../scripts/capture-legal-pdfs";
+import { buildOutputPath, buildPdfConfig, LEGAL_PAGES, resolveSnapshotDate } from "../../scripts/capture-legal-pdfs";
 import path from "path";
 
 describe("buildOutputPath", () => {
@@ -63,5 +63,36 @@ describe("LEGAL_PAGES", () => {
 
   it("has exactly two entries", () => {
     expect(LEGAL_PAGES).toHaveLength(2);
+  });
+});
+
+describe("resolveSnapshotDate", () => {
+  it("returns the explicit date when a non-empty string is supplied", () => {
+    expect(resolveSnapshotDate("2026-06-11")).toBe("2026-06-11");
+  });
+
+  it("falls through to today's UTC date when the env var is undefined (unset)", () => {
+    const result = resolveSnapshotDate(undefined);
+    // Must match YYYY-MM-DD and equal today's UTC date
+    expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(result).toBe(new Date().toISOString().slice(0, 10));
+  });
+
+  it("falls through to today's UTC date when the env var is empty string (GHA push-trigger path)", () => {
+    // GitHub Actions sets SNAPSHOT_DATE="" on the push-trigger and no-date
+    // workflow_dispatch paths. This is the regression that ?? did NOT catch.
+    const result = resolveSnapshotDate("");
+    expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(result).toBe(new Date().toISOString().slice(0, 10));
+    // Crucially: must NOT be empty string (the bug)
+    expect(result).not.toBe("");
+  });
+
+  it("does not allow an empty-string date to reach PDF filenames", () => {
+    // Guard that empty-date produces a broken filename like '-terms.pdf'
+    const date = resolveSnapshotDate("");
+    const outputPath = buildOutputPath("/base", "terms", date);
+    expect(outputPath).not.toMatch(/^\/base\/-terms\.pdf$/);
+    expect(outputPath).toMatch(/\d{4}-\d{2}-\d{2}-terms\.pdf$/);
   });
 });

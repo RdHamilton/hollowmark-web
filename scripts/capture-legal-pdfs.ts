@@ -43,6 +43,24 @@ export function buildOutputPath(baseDir: string, page: string, date: string): st
 }
 
 /**
+ * Resolve the snapshot date from an environment variable value.
+ *
+ * GitHub Actions sets an env var to `""` (empty string, not unset) when the
+ * workflow_dispatch input is left blank or when the push-trigger path runs
+ * without an explicit override. Nullish coalescing (`??`) does NOT fall through
+ * on empty string, so we use logical OR (`||`) to treat `""` the same as
+ * `undefined`.
+ *
+ * @param envVar  The raw value of `process.env.SNAPSHOT_DATE` (may be
+ *                `undefined` when unset, or `""` when GHA sets a blank input).
+ * @returns       Either the caller-supplied date string, or today's UTC date in
+ *                YYYY-MM-DD format.
+ */
+export function resolveSnapshotDate(envVar: string | undefined): string {
+  return envVar || new Date().toISOString().slice(0, 10);
+}
+
+/**
  * Build the Playwright PDF options used for all legal-page snapshots.
  * A4 paper, printed backgrounds so colour/brand renders correctly, and
  * comfortable margins so no text is clipped.
@@ -69,9 +87,7 @@ async function main(): Promise<void> {
 
   const baseUrl = process.env.BASE_URL ?? "https://hollowmark.app";
   const outputDir = process.env.OUTPUT_DIR ?? path.join(process.cwd(), "pdf-output");
-  const snapshotDate =
-    process.env.SNAPSHOT_DATE ??
-    new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const snapshotDate = resolveSnapshotDate(process.env.SNAPSHOT_DATE);
 
   fs.mkdirSync(outputDir, { recursive: true });
 
