@@ -29,6 +29,7 @@
     "jsdom": "^27.0.1",
     "posthog-js": "^1.376.3",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^6",
     "vitest": "^3.2.4"
   },

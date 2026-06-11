@@ -1,0 +1,94 @@
+name: Archive Legal Pages as PDF
+
+# Triggers:
+# 1. When legal-page source or the capture script itself changes on main
+#    (content-deploy path — satisfies AC1 + AC4).
+# 2. On workflow_dispatch for on-demand manual snapshots (AC5 runbook).
+#
+# hollowmark-tickets#1169
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/terms/**"
+      - "app/privacy/**"
+      - "scripts/capture-legal-pdfs.ts"
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL to snapshot (leave blank for https://hollowmark.app)"
+        required: false
+        default: ""
+      snapshot_date:
+        description: "Override snapshot date YYYY-MM-DD (leave blank for today)"
+        required: false
+        default: ""
+
+concurrency:
+  group: legal-pdf-archive
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  capture-and-commit:
+    name: Capture PDFs and commit to hollowmark-docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout hollowmark-web (script source)
+        uses: actions/checkout@v6
+        with:
+          path: hollowmark-web
+
+      # Checkout hollowmark-docs into a subdirectory so the script can write
+      # directly into the target repo. Uses the PAT stored as a repository secret.
+      - name: Checkout hollowmark-docs (PDF target)
+        uses: actions/checkout@v6
+        with:
+          repository: RdHamilton/hollowmark-docs
+          token: ${{ secrets.HOLLOWMARK_DOCS_PAT }}
+          path: hollowmark-docs
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: hollowmark-web/package-lock.json
+
+      - name: Install dependencies
+        working-directory: hollowmark-web
+        run: npm ci
+
+      - name: Install Playwright Chromium browser
+        working-directory: hollowmark-web
+        run: npx playwright install chromium --with-deps
+
+      - name: Ensure output directory exists in hollowmark-docs
+        run: mkdir -p hollowmark-docs/business/legal/published
+
+      - name: Capture legal pages to PDF
+        working-directory: hollowmark-web
+        env:
+          BASE_URL: ${{ inputs.base_url != '' && inputs.base_url || 'https://hollowmark.app' }}
+          OUTPUT_DIR: ${{ github.workspace }}/hollowmark-docs/business/legal/published
+          SNAPSHOT_DATE: ${{ inputs.snapshot_date != '' && inputs.snapshot_date || '' }}
+        run: npx tsx scripts/capture-legal-pdfs.ts
+
+      - name: Commit PDFs to hollowmark-docs
+        working-directory: hollowmark-docs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add business/legal/published/*.pdf
+          # Only commit if something changed (idempotent on re-runs the same day)
+          if git diff --cached --quiet; then
+            echo "No new PDFs to commit (snapshots already up to date for this date)."
+          else
+            DATE=$(date -u +%Y-%m-%d)
+            git commit -m "docs(legal): PDF archive snapshot ${DATE} — hollowmark-tickets#1169"
+            git push
+          fi
