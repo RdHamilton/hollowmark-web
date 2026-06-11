@@ -1,0 +1,303 @@
+name: Board Status Automation
+
+# ---------------------------------------------------------------------------
+# Automatically transitions Status on ANY project board that contains a
+# linked issue, based on PR lifecycle and issue close events.
+#
+# TARGET BEHAVIOR
+# ---------------
+# PR opened / ready-for-review  -> linked board items set to "PR Review"
+# PR merged (pull_request_target closed+merged) -> linked board items set to "Done"
+# Issue closed                  -> issue's own board items set to "Done"
+#
+# "In Progress" is OUT OF SCOPE -- set at dispatch by the orchestrator/engineer.
+#
+# BOARD-AGNOSTIC DESIGN
+# ----------------------
+# No board number, project ID, Status field ID, or option ID is hardcoded.
+# For each linked issue, the workflow queries all of its projectItems to get
+# the set of boards the issue currently belongs to. For each board, it
+# dynamically resolves that board's Status field ID and the option IDs for
+# "PR Review" and "Done" at runtime via node(id:) -> field(name:"Status").
+# This means items move on whatever board(s) they belong to today -- #55,
+# #63, or any future wave board -- with zero per-wave edits to this file.
+#
+# CROSS-REPO SUPPORT
+# ------------------
+# Issues in RdHamilton/hollowmark-web and RdHamilton/hollowmark-tickets are
+# both supported. closingIssuesReferences resolves cross-repo links.
+# For issue-close events: this workflow fires for issues in its own repo.
+# Issues in hollowmark-tickets need this same workflow in that repo.
+#
+# LINKING CONVENTION
+# ------------------
+# Issues are linked via PR body using GitHub closing keywords:
+#   closes #NNN                                    (same-repo)
+#   closes RdHamilton/hollowmark-tickets#NNN       (cross-repo)
+# Both forms are resolved by closingIssuesReferences.
+#
+# TOKEN
+# -----
+# Uses secrets.GH_PROJECT_PAT (classic PAT, "VaultMTG-Board-Automation",
+# project scope). GITHUB_TOKEN cannot write to ProjectV2.
+# If GH_PROJECT_PAT is absent, the job warns and exits 0 (safe no-op).
+# If a GraphQL mutation returns errors, the step fails (non-zero) so
+# drift is visible -- real errors are not swallowed.
+#
+# NULL SAFETY
+# -----------
+# A PR/issue with no linked issues, or a linked issue on no board, or a
+# board with no Status field, is a legitimate no-op. Every dict access is
+# guarded; no subscript on None. The job exits 0 with an informational log.
+#
+# COMPOSITE ACTION
+# ----------------
+# The field-resolution + mutation Python block is extracted to
+# .github/actions/board-status-move/action.yml and shared across all four
+# jobs. The GraphQL fetch (which differs per event type) stays inline.
+# The response JSON is base64-encoded before storing in GITHUB_OUTPUT to
+# avoid newline/special-char corruption.
+#
+# TICKETS
+# -------
+# Chore #849  -- add board-status-automation to hollowmark-web (Ben, 2026-06-11)
+# Fix #1087   -- board-agnostic board-status-automation (Ben, 2026-06-07)
+# Refactor #1088 -- extract PYEOF blocks to composite action (Ben, 2026-06-11)
+# ---------------------------------------------------------------------------
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+    branches: [main]
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+  issues:
+    types: [closed]
+
+concurrency:
+  group: board-status-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+jobs:
+
+  # -------------------------------------------------------------------------
+  # Job: set-pr-review
+  # Runs when a PR is opened or marked ready-for-review (non-draft).
+  # For each issue linked via closingIssuesReferences, finds all boards that
+  # issue belongs to and sets Status = "PR Review" on each.
+  # -------------------------------------------------------------------------
+  set-pr-review:
+    name: Set board status to PR Review
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: |
+      github.event_name == 'pull_request' &&
+      (github.event.action == 'opened' || github.event.action == 'ready_for_review') &&
+      github.event.pull_request.draft == false
+
+    steps:
+      - name: Checkout (required for local composite action)
+        uses: actions/checkout@v4
+
+      - name: Fetch linked closing issues and their board memberships
+        id: fetch
+        env:
+          GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          # shellcheck disable=SC2016  # single-quoted $vars are GraphQL placeholders, not shell expansions
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "WARNING: GH_PROJECT_PAT secret is not set -- skipping board status update (safe no-op)."
+            exit 0
+          fi
+
+          echo "PR #${PR_NUMBER} opened/ready -- fetching linked closing issues and their board memberships..."
+
+          RESPONSE=$(gh api graphql \
+            -f query='query($owner: String!, $repo: String!, $pr: Int!) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $pr) {
+                  closingIssuesReferences(first: 25) {
+                    nodes {
+                      number
+                      repository { name owner { login } }
+                      projectItems(first: 20) {
+                        nodes {
+                          id
+                          project { id number title }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }' \
+            -f owner="${REPO_OWNER}" \
+            -f repo="${REPO_NAME}" \
+            -F pr="${PR_NUMBER}" 2>&1)
+
+          echo "GraphQL response received."
+          echo "response_b64=$(echo "${RESPONSE}" | base64 -w 0)" >> "$GITHUB_OUTPUT"
+
+      - name: Move linked board items to PR Review
+        if: steps.fetch.outputs.response_b64 != ''
+        uses: ./.github/actions/board-status-move
+        with:
+          response_b64: ${{ steps.fetch.outputs.response_b64 }}
+          node_type: pr
+          target_status: PR Review
+          gh_token: ${{ secrets.GH_PROJECT_PAT }}
+
+  # -------------------------------------------------------------------------
+  # Job: set-done-on-pr-merge
+  # Runs when a PR is merged (pull_request_target closed + merged == true).
+  # pull_request_target runs in the base-branch context so secrets are
+  # available even for PRs from feature branches.
+  # For each linked issue, sets Status = "Done" on every board it belongs to.
+  # -------------------------------------------------------------------------
+  set-done-on-pr-merge:
+    name: Set board status to Done (PR merged)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: |
+      github.event_name == 'pull_request_target' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true
+
+    steps:
+      - name: Checkout (required for local composite action)
+        uses: actions/checkout@v4
+
+      - name: Fetch linked closing issues and their board memberships
+        id: fetch
+        env:
+          GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          # shellcheck disable=SC2016  # single-quoted $vars are GraphQL placeholders, not shell expansions
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "WARNING: GH_PROJECT_PAT secret is not set -- skipping board status update (safe no-op)."
+            exit 0
+          fi
+
+          echo "PR #${PR_NUMBER} merged -- fetching linked closing issues and their board memberships..."
+
+          RESPONSE=$(gh api graphql \
+            -f query='query($owner: String!, $repo: String!, $pr: Int!) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $pr) {
+                  closingIssuesReferences(first: 25) {
+                    nodes {
+                      number
+                      repository { name owner { login } }
+                      projectItems(first: 20) {
+                        nodes {
+                          id
+                          project { id number title }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }' \
+            -f owner="${REPO_OWNER}" \
+            -f repo="${REPO_NAME}" \
+            -F pr="${PR_NUMBER}" 2>&1)
+
+          echo "GraphQL response received."
+          echo "response_b64=$(echo "${RESPONSE}" | base64 -w 0)" >> "$GITHUB_OUTPUT"
+
+      - name: Move linked board items to Done
+        if: steps.fetch.outputs.response_b64 != ''
+        uses: ./.github/actions/board-status-move
+        with:
+          response_b64: ${{ steps.fetch.outputs.response_b64 }}
+          node_type: pr
+          target_status: Done
+          gh_token: ${{ secrets.GH_PROJECT_PAT }}
+
+  # -------------------------------------------------------------------------
+  # Job: set-done-on-issue-close
+  # Runs when an issue is closed in this repo.
+  # Covers: manual closes, orchestrator-inline closes, superseded issues,
+  # and cross-repo closes that do not fire a PR-merge event in this repo.
+  #
+  # Queries the closed issue's own projectItems to find all boards it
+  # belongs to, then sets Status = "Done" on each dynamically.
+  #
+  # NOTE: The issues: [closed] trigger fires only for issues in this repo.
+  # Issues in RdHamilton/hollowmark-tickets need this same workflow there.
+  # -------------------------------------------------------------------------
+  set-done-on-issue-close:
+    name: Set board status to Done (issue closed)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event_name == 'issues' && github.event.action == 'closed'
+
+    steps:
+      - name: Checkout (required for local composite action)
+        uses: actions/checkout@v4
+
+      - name: Fetch closed issue board memberships
+        id: fetch
+        env:
+          GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          # shellcheck disable=SC2016  # single-quoted $vars are GraphQL placeholders, not shell expansions
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "WARNING: GH_PROJECT_PAT secret is not set -- skipping board status update (safe no-op)."
+            exit 0
+          fi
+
+          echo "Issue #${ISSUE_NUMBER} closed -- fetching its board memberships..."
+
+          RESPONSE=$(gh api graphql \
+            -f query='query($owner: String!, $repo: String!, $issue: Int!) {
+              repository(owner: $owner, name: $repo) {
+                issue(number: $issue) {
+                  projectItems(first: 20) {
+                    nodes {
+                      id
+                      project { id number title }
+                    }
+                  }
+                }
+              }
+            }' \
+            -f owner="${REPO_OWNER}" \
+            -f repo="${REPO_NAME}" \
+            -F issue="${ISSUE_NUMBER}" 2>&1)
+
+          echo "GraphQL response received."
+          echo "response_b64=$(echo "${RESPONSE}" | base64 -w 0)" >> "$GITHUB_OUTPUT"
+          echo "issue_number=${ISSUE_NUMBER}" >> "$GITHUB_OUTPUT"
+
+      - name: Move closed issue board items to Done
+        if: steps.fetch.outputs.response_b64 != ''
+        uses: ./.github/actions/board-status-move
+        with:
+          response_b64: ${{ steps.fetch.outputs.response_b64 }}
+          node_type: issue
+          target_status: Done
+          gh_token: ${{ secrets.GH_PROJECT_PAT }}
+          issue_number: ${{ steps.fetch.outputs.issue_number }}
