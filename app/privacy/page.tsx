@@ -1233,8 +1233,7 @@ export default function PrivacyPage() {
               <br />
               6260 Whitetail CT NW
               <br />
-              {/* TODO: confirm ZIP with Ramone (Acworth GA) */}
-              Acworth, GA
+              Acworth, GA 30101
             </blockquote>
             <p style={BODY_STYLE}>
               We respond to privacy inquiries within 10 business days of receipt and complete

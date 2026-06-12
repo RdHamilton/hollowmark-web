@@ -907,8 +907,7 @@ export default function TermsPage() {
               <br />
               6260 Whitetail CT NW
               <br />
-              {/* TODO: confirm ZIP with Ramone (Acworth GA) */}
-              Acworth, GA
+              Acworth, GA 30101
             </blockquote>
           </section>
 
