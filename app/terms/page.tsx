@@ -905,8 +905,10 @@ export default function TermsPage() {
             >
               Ray Hamilton Engineering, LLC
               <br />
-              [Postal address — to be inserted at publication; Faye supplies the registered address
-              used in the Georgia LLC filing]
+              6260 Whitetail CT NW
+              <br />
+              {/* TODO: confirm ZIP with Ramone (Acworth GA) */}
+              Acworth, GA
             </blockquote>
           </section>
 
